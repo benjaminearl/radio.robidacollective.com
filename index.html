@@ -92,31 +92,42 @@
     .catch(err => console.error("Error loading backgrounds:", err));
 </script>
 <script>
-async function loadAnnouncements() {
-    try {
-        const response = await fetch('telegram/telegram_data/announcements.json', {
-            cache: 'no-cache'
-        });
-        if (!response.ok) throw new Error('Failed to load announcements.json');
+    async function loadAnnouncements() {
+        try {
+            const response = await fetch('telegram/telegram_data/announcements.json', {
+                cache: 'no-store'
+            });
 
-        const data = await response.json();
-        const marquee = document.querySelector('.announcements__marquee span');
+            if (!response.ok) {
+                console.error("❌ Failed to load announcements.json");
+                return;
+            }
 
-        if (data.length === 0) {
-            marquee.textContent = "No announcements available";
-            return;
+            const announcements = await response.json();
+
+            if (!Array.isArray(announcements) || announcements.length === 0) {
+                console.log("📭 No announcements found");
+                return;
+            }
+
+            // Build the text for the marquee
+            const marqueeText = announcements
+                .map(a => `${a.text}`)
+                .join(' ⚪ '); // separator between announcements
+
+            const marquee = document.querySelector('.announcements__marquee span');
+            if (marquee) {
+                marquee.textContent = marqueeText;
+            }
+        } catch (err) {
+            console.error("❌ Error loading announcements:", err);
         }
-
-        // Combine all announcements into one scrolling string
-        const text = data.map(item => item.announcement).join(' • ');
-        marquee.textContent = text;
-    } catch (err) {
-        console.error('Error loading announcements:', err);
     }
-}
 
-document.addEventListener('DOMContentLoaded', loadAnnouncements);
+    // Load announcements on page load
+    document.addEventListener('DOMContentLoaded', loadAnnouncements);
 </script>
+
 
 
 <script src="script.js"></script>

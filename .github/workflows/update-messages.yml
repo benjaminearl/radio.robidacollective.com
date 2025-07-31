@@ -1,0 +1,41 @@
+name: Update Telegram Announcements
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'  # every 10 minutes
+  workflow_dispatch:        # allow manual run
+
+jobs:
+  update-announcements:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run export script
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: |
+          python fetch_telegram_messages.py
+
+      - name: Commit and push updates if needed
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add telegram/telegram_data/announcements.json
+
+          if git diff --cached --quiet; then
+            echo "✅ No changes to commit"
+          else
+            git commit -m "Update announcements from Telegram"
+            git push
+          fi

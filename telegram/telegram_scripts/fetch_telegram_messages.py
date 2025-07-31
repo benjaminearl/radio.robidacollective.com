@@ -13,6 +13,12 @@ if not BOT_TOKEN or not CHAT_ID:
 print(f"✅ Using BOT_TOKEN: {'*' * len(BOT_TOKEN[:-5]) + BOT_TOKEN[-5:]}")
 print(f"✅ Using CHAT_ID: {CHAT_ID}")
 
+# Path for saving announcements
+OUTPUT_DIR = "telegram/telegram_data"
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+OUTPUT_FILE = os.path.join(OUTPUT_DIR, "announcements.json")
+
+# Telegram API endpoint
 url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates"
 
 try:
@@ -40,7 +46,7 @@ for i, upd in enumerate(updates):
         continue
 
     msg_chat_id = str(msg.get("chat", {}).get("id"))
-    print(f"\n🔍 Processing message #{i}:")
+    print(f"\n🔍 Processing update #{i}:")
     print(f"    From chat ID: {msg_chat_id} (expected: {CHAT_ID})")
 
     if msg_chat_id != CHAT_ID:
@@ -54,7 +60,7 @@ for i, upd in enumerate(updates):
     username = msg.get("from", {}).get("username", "unknown")
     announcement_data = {
         "user": username,
-        "announcement": msg["text"],
+        "text": msg["text"],
         "date": datetime.fromtimestamp(msg["date"]).isoformat()
     }
     print(f"    ✅ Saved announcement: {announcement_data}")
@@ -63,7 +69,6 @@ for i, upd in enumerate(updates):
 if not announcements:
     print("📭 No matching announcements found.")
 else:
-    os.makedirs("telegram/telegram_data", exist_ok=True)
-    with open("telegram/telegram_data/announcements.json", "w", encoding="utf-8") as f:
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(announcements, f, indent=2)
-    print(f"\n💾 Saved {len(announcements)} announcements to announcements.json")
+    print(f"\n💾 Saved {len(announcements)} announcements to {OUTPUT_FILE}")
