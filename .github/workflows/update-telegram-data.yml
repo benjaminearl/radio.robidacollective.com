@@ -1,0 +1,48 @@
+name: Update Telegram Data
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'  # Every 10 minutes
+  workflow_dispatch:
+
+permissions:
+  contents: write      # required to push changes
+  pages: write         # required to trigger Pages deployment
+  id-token: write      # required for OIDC authentication
+
+jobs:
+  update-telegram-data:
+    runs-on: ubuntu-latest
+
+    env:
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run combined Telegram fetch script
+        run: python telegram/fetch_telegram.py
+
+      - name: Commit and push updates if needed
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add telegram/telegram_data/announcements.json telegram/telegram_data/channel_images.json telegram/telegram_images/
+
+          if git diff --cached --quiet; then
+            echo "✅ No changes to commit"
+          else
+            git commit -m "Update Telegram announcements and channel images"
+            git push
+            echo "✅ Changes pushed, triggering GitHub Pages build"
+          fi
