@@ -25,7 +25,7 @@ jobs:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
         run: |
-          python fetch_telegram_messages.py
+          python telegram/telegram_scripts/fetch_telegram_messages.py
 
       - name: Commit and push updates if needed
         run: |
