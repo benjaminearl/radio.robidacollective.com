@@ -110,9 +110,9 @@
                 return;
             }
 
-            // Build the text for the marquee
+            // Include time in each announcement
             const marqueeText = announcements
-                .map(a => `${a.text}`)
+                .map(a => `[${a.date}] ${a.text}`)
                 .join(' ⚪ '); // separator between announcements
 
             const marquee = document.querySelector('.announcements__marquee span');
@@ -124,9 +124,9 @@
         }
     }
 
-    // Load announcements on page load
     document.addEventListener('DOMContentLoaded', loadAnnouncements);
 </script>
+
 
 
 

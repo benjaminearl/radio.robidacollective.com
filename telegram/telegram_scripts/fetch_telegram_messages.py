@@ -57,7 +57,7 @@ for i, upd in enumerate(updates):
     announcement_data = {
         "user": username,
         "text": msg["text"],
-        "date": datetime.fromtimestamp(msg["date"]).isoformat()
+        "date": datetime.fromtimestamp(msg["date"]).strftime("%Y-%m-%d %H:%M")
     }
     print(f"    ✅ Saved announcement: {announcement_data}")
     announcements.append(announcement_data)
