@@ -91,7 +91,8 @@ for i, upd in enumerate(updates):
     print(f"🖼️ Mapped image to div '{div_id}'")
 
 if channel_images:
-    with open("telegram/telegram_images/channel_images.json", "w", encoding="utf-8") as f:
+    os.makedirs("telegram/telegram_data", exist_ok=True)  # ensure dir exists
+    with open("telegram/telegram_data/channel_images.json", "w", encoding="utf-8") as f:
         json.dump(channel_images, f, indent=2)
     print("\n💾 channel_images.json updated successfully!")
 else:
