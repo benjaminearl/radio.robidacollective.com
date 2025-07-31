@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Gardening Summer School</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <svg width="0" height="0">
+  <defs>
+    <mask id="blob-mask">
+      <path fill="white">
+        <animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="scale"
+                          values="1;1.1;0.9;1"
+                          dur="3s"
+                          repeatCount="indefinite"/>
+        <!-- Path is a blobby organic shape -->
+        <animate attributeName="d"
+                 dur="6s"
+                 repeatCount="indefinite"
+                 values="
+                   M50,-40C70,-60,100,-50,120,-30C140,-10,150,20,130,40C110,60,70,80,40,70C10,60,-20,40,-30,20C-40,0,-30,-30,-10,-40C10,-50,30,-20,50,-40Z;
+                   M40,-50C60,-70,100,-60,120,-40C140,-20,140,10,120,30C100,50,60,60,30,50C0,40,-20,30,-30,10C-40,-10,-30,-30,-10,-50C10,-70,20,-30,40,-50Z;
+                   M50,-40C70,-60,100,-50,120,-30C140,-10,150,20,130,40C110,60,70,80,40,70C10,60,-20,40,-30,20C-40,0,-30,-30,-10,-40C10,-50,30,-20,50,-40Z" />
+      </path>
+    </mask>
+  </defs>
+</svg>
+    <div class="site-container">
+        <header class="header">
+            <div class="header__title">
+                <a href="" class="site-title">Radio<br>Gardening<br>Summer School</a>
+            </div>
+            <nav class="header__nav">
+                <a href="https://robidacollective.com/" class="header__nav__link" target="_blank">Go to main website</a>
+                <button onclick="toggleAside()" class="header__nav__link">Open chat</button>
+            </nav>
+        </header>
+        <main class="main">
+            <section class="section">
+                <div class="garden">
+                    <div class="garden__patch">
+                        <div class="audio">
+                            <audio class="audio__source" src="https://radio.goodtimesbadtimes.club/radio/8060/radio.mp3"></audio>
+                            <div class="audio__ui">
+                                <button class="audio__playBtn">Tune in</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="garden__patch">
+                        <div class="audio">
+                            <audio class="audio__source" src="https://radio.goodtimesbadtimes.club/radio/8000/radio.mp3"></audio>
+                            <div class="audio__ui">
+                                <button class="audio__playBtn">Tune in</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="garden__patch">
+                        <div class="audio">
+                            <audio class="audio__source" src="https://radio.goodtimesbadtimes.club/radio/8000/radio.mp3"></audio>
+                            <div class="audio__ui">
+                                <button class="audio__playBtn">Tune in</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <aside id="aside" class="aside">
+            <div class="chat">
+             
+            </div>
+        </aside>
+        <footer class="footer">
+            <div class="timeline">
+                <div class="timeline__inner">
+                    <div class="timeline-bar" id="timelineBar"></div>
+                    <div class="timeline-labels" id="dateLabels"></div>
+                    <div id="markersContainer"></div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <div id="popup" class="popup hidden">
+        <div class="popup-content">
+            <button id="popupClose" class="popup-close">×</button>
+            <div id="popupDescription"></div>
+        </div>
+    </div>
+
+</body>
+<script src="script.js"></script>
+</html>

@@ -1,0 +1,337 @@
+@font-face {
+  font-family: 'Briz';
+  src: url(fonts/Briz.otf) format("opentype");
+}
+
+:root {
+    /* || PRIMITIVES */
+    --color_000:    #ffffff;
+    --color_005:    #f2f2f2;
+    --color_010:    #E5E5E5;
+    --color_020:    #CCCCCC;
+    --color_030:    #B2B2B2;
+    --color_040:    #999999;
+    --color_050:    #808080;
+    --color_060:    #666666;
+    --color_070:    #4D4D4D;
+    --color_080:    #333333;
+    --color_090:    #1A1A1A;
+    --color_100:    #000000;
+
+    --color_sage:  #C3D1C6;
+    --color_brown: #592D2E;
+    --color_yellow:#F9F27F;
+
+
+    --spacing_0:    0;
+    --spacing_xs:   0.25rem;
+    --spacing_s:    0.5rem;
+    --spacing_m:    1rem;
+    --spacing_l:    2rem;
+    --spacing_xl:   4rem;
+
+    --radius_s:     0.5rem;
+    --radius_m:     1rem;
+    --radius_l:     50%;
+
+    --font-size_s:  0.8rem;
+    --font-size_m:  1rem;
+    --font-size_l:  1.5rem;
+    --font-size_xl: 2rem;
+
+    --font_primary:         'IBM Plex Mono', monospace;
+    --font_secondary:       'Briz', times new roman, serif;
+
+    --font-weight_regular:  normal;
+    --font-weight_bold:     bold;
+
+    --line-height_normal:   1.2;
+
+    /* || SEMANTIC */
+    --color_background_primary:     var(--color_sage);
+    --color_background_secondary:   var(--color_yellow);
+    --color_text_normal:            var(--color_brown);
+    --color_text_muted:             var(--color_060);
+    --color_text_highlighted: ;
+    --color_text_hover: ;
+    --color_border_normal:          var(--color_brown);
+    --color_border_muted:           var(--color_yellow);
+
+    --spacing_outer-margin:         0 var(--spacing_m);
+    --spacing_section-margin:       var(--spacing_s) 0;
+    --spacing_inner-padding:        var(--spacing_s);
+
+    --font-size_title:              var(--font-size_xl);
+    --font-size_body: ;
+
+    --border_normal:                1px solid var(--color_border_normal);
+    --border_muted:                 1px solid var(--color_border_muted);
+
+    /* || COMPONENT-SPECIFIC */
+}
+
+* {
+    /* background-color: #592D2E10; */
+}
+html {
+    font-size: 16px;
+}
+body {
+    background-color: var(--color_background_primary);
+    color: var(--color_text_normal);
+    font-family: var(--font_primary);
+    margin: 0;
+}
+
+
+.site-container {
+    margin: var(--spacing_outer-margin);
+}
+
+.header {
+    margin: var(--spacing_section-margin);
+    display: flex;
+    justify-content: space-between;
+}
+.header__nav {
+    align-items: right;
+}
+.header__nav__link {
+    display: block;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: var(--font-size_s);
+    cursor: pointer;
+    background: none;
+    color: var(--color_text_normal);
+    border: var(--border_normal);
+    border-radius: var(--radius_m);
+    padding: 0 var(--spacing_inner-padding);
+    margin-bottom: var(--spacing_xs);
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.aside {
+    position: fixed;
+    right: 0;
+    height: 100%;
+    width: 0;
+    background-color: white;
+    transition: all 0.5s ease-in-out;
+}
+.aside--open {
+    width: 25vw;
+}
+
+.footer {
+   /* margin: var(--spacing_section-margin);  */
+   position: fixed;
+   bottom: 3rem;
+   width: calc(100vw - var(--spacing_l));  
+}
+
+
+.section {
+    margin: var(--spacing_section-margin);
+}
+
+.garden {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100vw - var(--spacing_l));
+    height: 500px;
+    display: flex;
+    gap: var(--spacing_m);
+}
+.garden__patch {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing_inner-padding);
+  background-color: var(--color_background_secondary);
+
+  /* Use the SVG as a mask */
+  -webkit-mask: url(#blob-mask) center/contain no-repeat;
+  mask: url(#blob-mask) center/contain no-repeat;
+
+  /* If you want it to only reveal the center, add: */
+  -webkit-mask-composite: intersect;
+  mask-composite: intersect;
+}
+
+
+
+
+
+
+
+
+.timeline {
+    position: relative;
+    border-bottom: var(--border_normal);
+}
+.timeline__inner {
+    position: relative;
+    left: 0;
+    width: 100%;
+    height: var(--spacing_l);
+    z-index: 9999;
+}
+
+.timeline-bar {
+    position: relative;
+    height: 100%;
+    background-color: var(--color_yellow);
+    width: 0%;
+    transition: width 0.5s linear;
+}
+
+.timeline-labels {
+    position: absolute;
+    width: 100%;
+    /* top: 0; */
+    font-size: var(--font-size_s);
+}
+
+.date-label {
+    position: absolute;
+    white-space: nowrap;
+    border-left: var(--border_normal);
+    padding-left: var(--spacing_s);
+    padding-top: var(--spacing_s);
+}
+
+#markersContainer {
+    position: absolute;
+    width: 100%;
+    height: 100px; /* enough space for stacked labels */
+}
+
+.marker {
+  position: absolute;
+  top: 0; /* so bottom offsets start from the dot */
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.marker-dot {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    width: 6px;
+    height: 6px;
+    transform: translateX(-50%);
+    background-color: var(--color_brown);
+    border-radius: 50%;
+}
+
+.marker-label {
+    
+  position: absolute;
+  left: 50%;
+  white-space: nowrap;
+  /* padding: 0  var(--spacing_inner-padding); */
+  /* background-color: white; */
+  font-size: var(--font-size_s);
+  cursor: pointer;
+  /* bottom is set dynamically */
+}
+
+.marker-line {
+    display: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 1px;
+  background-color: var(--color_brown);
+  /* height set dynamically */
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.popup.hidden {
+  display: none;
+}
+.popup-content {
+  background: white;
+  padding: 2rem;
+  max-width: 600px;
+  width: 90%;
+  border-radius: 1rem;
+  position: relative;
+}
+.popup-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+.popup__description img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+
+
+
+
+
+/* || TXT */
+.site-title {
+    font-family: var(--font_secondary);
+    color: var(--color_text_normal);
+    text-transform: uppercase;
+    font-size: var(--font-size_title);
+    text-decoration: none;
+}
+
+
+/* || AUDIO */
+.audio {
+}
+
+.audio__ui {
+    display: flex;
+    align-items: center;
+}
+
+.audio__playBtn {
+    cursor: pointer;
+    background: none;
+    color: var(--color_text_normal);
+    border: var(--border_normal);
+    border-radius: var(--radius_m);
+}
+
+.audio__playBtn:hover {
+    background-color: var(--color_background_secondary);
+}
