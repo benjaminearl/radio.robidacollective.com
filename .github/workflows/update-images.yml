@@ -6,10 +6,12 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write  # 🔐 Required for push access
+  contents: write      # required to push changes
+  pages: write         # required to trigger Pages deployment
+  id-token: write      # required for OIDC authentication
 
 jobs:
-  update-backgrounds:
+  update-channel-images:
     runs-on: ubuntu-latest
 
     env:
@@ -28,18 +30,19 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run background fetch script
+      - name: Run channel image fetch script
         run: python telegram/telegram_scripts/fetch_telegram_images.py
 
       - name: Commit and push updates if needed
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add backgrounds.json images/
+          git add telegram/telegram_images/channel_images.json telegram/telegram_images/
 
           if git diff --cached --quiet; then
-            echo "No changes to commit"
+            echo "✅ No changes to commit"
           else
-            git commit -m "Update background images from Telegram"
+            git commit -m "Update channel images from Telegram"
             git push
+            echo "✅ Changes pushed, triggering GitHub Pages build"
           fi

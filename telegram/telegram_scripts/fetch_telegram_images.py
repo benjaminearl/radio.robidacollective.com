@@ -20,7 +20,7 @@ CAPTION_TO_ID = {
 
 API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
 FILE_URL = f"https://api.telegram.org/file/bot{BOT_TOKEN}"
-IMAGE_DIR = "telegram_images"
+IMAGE_DIR = "telegram/telegram_images"
 os.makedirs(IMAGE_DIR, exist_ok=True)
 
 print("📡 Requesting updates from Telegram...")
@@ -34,7 +34,7 @@ except Exception as e:
 
 print(f"📬 Received {len(updates)} updates")
 
-backgrounds = {}
+channel_images = {}
 
 for i, upd in enumerate(updates):
     msg = upd.get("message")
@@ -87,12 +87,12 @@ for i, upd in enumerate(updates):
         print(f"❌ Error saving image: {e}")
         continue
 
-    backgrounds[div_id] = f"{IMAGE_DIR}/{image_name}"
+    channel_images[div_id] = f"{IMAGE_DIR}/{image_name}"
     print(f"🖼️ Mapped image to div '{div_id}'")
 
-if backgrounds:
-    with open("backgrounds.json", "w", encoding="utf-8") as f:
-        json.dump(backgrounds, f, indent=2)
-    print("\n💾 backgrounds.json updated successfully!")
+if channel_images:
+    with open("telegram/telegram_images/channel_images.json", "w", encoding="utf-8") as f:
+        json.dump(channel_images, f, indent=2)
+    print("\n💾 channel_images.json updated successfully!")
 else:
-    print("📭 No valid images found. backgrounds.json not updated.")
+    print("📭 No valid images found. channel_images.json not updated.")

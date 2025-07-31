@@ -22,7 +22,7 @@
         <main class="main">
             <section class="section">
                 <div class="stream">
-                    <div class="stream__channel">
+                    <div class="stream__channel" id="one">
                         <div class="audio">
                             <audio class="audio__source" src="https://radio.goodtimesbadtimes.club/radio/8060/radio.mp3"></audio>
                             <div class="audio__ui">
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="stream__channel">
+                    <div class="stream__channel" id="two">
                         <div class="audio">
                             <audio class="audio__source" src="https://radio.goodtimesbadtimes.club/radio/8000/radio.mp3"></audio>
                             <div class="audio__ui">
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="stream__channel">
+                    <div class="stream__channel" id="three">
                         <div class="audio">
                             <audio class="audio__source" src="https://radio.goodtimesbadtimes.club/radio/8000/radio.mp3"></audio>
                             <div class="audio__ui">
@@ -79,19 +79,34 @@
 <!-- TELEGRAM IMAGES SCRIPT -->
 
 <script>
-    fetch('backgrounds.json')
-        .then(res => res.json())
-        .then(data => {
-            ['one', 'two', 'three'].forEach(id => {
-                const div = document.getElementById(id);
-                if (div && data[id]) {
-                    div.style.backgroundImage = `url('${data[id]}')`;
-                    div.style.backgroundSize = 'cover';
-                    div.style.backgroundPosition = 'center';
-                    }
-            });
-        })
-    .catch(err => console.error("Error loading backgrounds:", err));
+  async function loadChannelImages() {
+    try {
+      const response = await fetch('telegram/telegram_data/channel_images.json', { cache: 'no-store' });
+      if (!response.ok) {
+        console.error('❌ Failed to load channel_images.json');
+        return;
+      }
+
+      const images = await response.json();
+
+      // For each id (one, two, three), set the background image of the div with that id
+      Object.entries(images).forEach(([id, imagePath]) => {
+        const div = document.getElementById(id);
+        if (div) {
+          div.style.backgroundImage = `url('${imagePath}')`;
+          div.style.backgroundSize = 'cover';
+          div.style.backgroundPosition = 'center';
+          div.style.backgroundRepeat = 'no-repeat';
+        } else {
+          console.warn(`⚠️ No div found with id "${id}"`);
+        }
+      });
+    } catch (err) {
+      console.error('❌ Error loading or applying channel images:', err);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', loadChannelImages);
 </script>
 
 <!-- TELEGRAM ANNOUNCEMENTS SCRIPT -->
