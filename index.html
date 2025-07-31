@@ -76,6 +76,8 @@
 
 </body>
 
+<!-- TELEGRAM IMAGES SCRIPT -->
+
 <script>
     fetch('backgrounds.json')
         .then(res => res.json())
@@ -91,7 +93,20 @@
         })
     .catch(err => console.error("Error loading backgrounds:", err));
 </script>
+
+<!-- TELEGRAM ANNOUNCEMENTS SCRIPT -->
 <script>
+    function formatDate(isoString) {
+        const date = new Date(isoString);
+        const options = {
+            day: '2-digit',
+            month: 'short',
+            hour: '2-digit',
+            minute: '2-digit'
+        };
+        return date.toLocaleString(undefined, options).replace(',', '');
+    }
+
     async function loadAnnouncements() {
         try {
             const response = await fetch('telegram/telegram_data/announcements.json', {
@@ -110,10 +125,15 @@
                 return;
             }
 
-            // Include time in each announcement
-            const marqueeText = announcements
-                .map(a => `[${a.date}] ${a.text}`)
-                .join(' ⚪ '); // separator between announcements
+            // Sort by date descending, then take latest 3
+            const latestThree = announcements
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 3);
+
+            // Build marquee text with formatted timestamps
+            const marqueeText = latestThree
+                .map(a => `[${formatDate(a.date)}] ${a.text}`)
+                .join(' ⚪ ');
 
             const marquee = document.querySelector('.announcements__marquee span');
             if (marquee) {
@@ -126,6 +146,8 @@
 
     document.addEventListener('DOMContentLoaded', loadAnnouncements);
 </script>
+
+
 
 
 
