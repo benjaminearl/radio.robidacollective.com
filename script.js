@@ -3,19 +3,23 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".audio").forEach(wrapper => {
     const audio = wrapper.querySelector("audio");
     const playBtn = wrapper.querySelector(".audio__playBtn");
+    const streamChannel = wrapper.closest(".stream__channel");
 
     playBtn.addEventListener("click", () => {
       if (audio.paused) {
         audio.play();
         playBtn.textContent = "Tune out";
+        streamChannel.classList.add("clear");
       } else {
         audio.pause();
         playBtn.textContent = "Tune in";
+        streamChannel.classList.remove("clear");
       }
     });
 
     audio.addEventListener("ended", () => {
       playBtn.textContent = "Tune in";
+      streamChannel.classList.remove("clear");
     });
   });
 

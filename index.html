@@ -23,26 +23,29 @@
             <section class="section">
                 <div class="stream">
                     <div class="stream__channel" id="one">
+                        <div class="stream__background"></div>
                         <div class="audio">
-                            <audio class="audio__source" src="https://radio.goodtimesbadtimes.club/radio/8060/radio.mp3"></audio>
+                            <audio class="audio__source" src="https://radio.goodtimesbadtimes.club/radio/8030/radio.mp3"></audio>
                             <div class="audio__ui">
-                                <button class="button audio__playBtn">Tune in</button>
+                                <button class="button audio__playBtn">Channel 1</button>
                             </div>
                         </div>
                     </div>
                     <div class="stream__channel" id="two">
+                        <div class="stream__background"></div>
                         <div class="audio">
-                            <audio class="audio__source" src="https://radio.goodtimesbadtimes.club/radio/8000/radio.mp3"></audio>
+                            <audio class="audio__source" src="https://radio.goodtimesbadtimes.club/radio/8060/radio.mp3"></audio>
                             <div class="audio__ui">
-                                <button class="button audio__playBtn">Tune in</button>
+                                <button class="button audio__playBtn">Channel 2</button>
                             </div>
                         </div>
                     </div>
                     <div class="stream__channel" id="three">
+                        <div class="stream__background"></div>
                         <div class="audio">
-                            <audio class="audio__source" src="https://radio.goodtimesbadtimes.club/radio/8000/radio.mp3"></audio>
+                            <audio class="audio__source" src="https://radio.goodtimesbadtimes.club/radio/8010/radio.mp3"></audio>
                             <div class="audio__ui">
-                                <button class="button audio__playBtn">Tune in</button>
+                                <button class="button audio__playBtn">Channel 3</button>
                             </div>
                         </div>
                     </div>
@@ -76,41 +79,42 @@
 
 </body>
 
-<!-- TELEGRAM IMAGES SCRIPT -->
+<!-- TELEGRAM SCRIPTS -->
 
 <script>
   async function loadChannelImages() {
-    try {
-      const response = await fetch('telegram/telegram_data/channel_images.json', { cache: 'no-store' });
-      if (!response.ok) {
-        console.error('❌ Failed to load channel_images.json');
-        return;
-      }
-
-      const images = await response.json();
-
-      // For each id (one, two, three), set the background image of the div with that id
-      Object.entries(images).forEach(([id, imagePath]) => {
-        const div = document.getElementById(id);
-        if (div) {
-          div.style.backgroundImage = `url('${imagePath}')`;
-          div.style.backgroundSize = 'cover';
-          div.style.backgroundPosition = 'center';
-          div.style.backgroundRepeat = 'no-repeat';
-        } else {
-          console.warn(`⚠️ No div found with id "${id}"`);
-        }
-      });
-    } catch (err) {
-      console.error('❌ Error loading or applying channel images:', err);
+  try {
+    const response = await fetch('telegram/telegram_data/channel_images.json', { cache: 'no-store' });
+    if (!response.ok) {
+      console.error('❌ Failed to load channel_images.json');
+      return;
     }
+
+    const images = await response.json();
+
+    Object.entries(images).forEach(([id, imagePath]) => {
+      const channelDiv = document.getElementById(id);
+      if (channelDiv) {
+        const bgDiv = channelDiv.querySelector('.stream__background');
+        if (bgDiv) {
+          bgDiv.style.backgroundImage = `url('${imagePath}')`;
+          bgDiv.style.backgroundSize = 'cover';
+          bgDiv.style.backgroundPosition = 'center';
+          bgDiv.style.backgroundRepeat = 'no-repeat';
+        } else {
+          console.warn(`⚠️ No .stream__background found inside #${id}`);
+        }
+      } else {
+        console.warn(`⚠️ No div found with id "${id}"`);
+      }
+    });
+  } catch (err) {
+    console.error('❌ Error loading or applying channel images:', err);
   }
+}
 
-  document.addEventListener('DOMContentLoaded', loadChannelImages);
-</script>
+document.addEventListener('DOMContentLoaded', loadChannelImages);
 
-<!-- TELEGRAM ANNOUNCEMENTS SCRIPT -->
-<script>
     function formatDate(isoString) {
         const date = new Date(isoString);
         const options = {
