@@ -30,6 +30,7 @@
                                 <button class="button audio__playBtn">Listen in</button>
                             </div>
                         </div>
+                        <p class="stream-name">Ambient Topolò 🔴</p>
                     </div>
                     <div class="stream__channel" id="two">
                         <div class="stream__background"></div>
@@ -39,6 +40,7 @@
                                 <button class="button audio__playBtn">Listen in</button>
                             </div>
                         </div>
+                        <p class="stream-name">Channel 1</p>
                     </div>
                     <div class="stream__channel" id="three">
                         <div class="stream__background"></div>
@@ -48,6 +50,7 @@
                                 <button class="button audio__playBtn">Listen in</button>
                             </div>
                         </div>
+                        <p class="stream-name">Walkie-Talkie 🔴</p>
                     </div>
                 </div>
             </section>
@@ -166,7 +169,7 @@ async function loadAnnouncements() {
 
         const marqueeText = latestThree
             .map(a => `[${formatCEST(a.date)} CEST] ${a.text}`)
-            .join(' 🔴 ');
+            .join(' 🟢 ');
 
         const marquee = document.querySelector('.announcements__marquee span');
         if (marquee) {

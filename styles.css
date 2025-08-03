@@ -95,6 +95,9 @@ body {
     color: var(--color_text_normal);
     font-family: var(--font_primary);
     margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; 
+    -webkit-text-size-adjust: none;
 }
 
 
@@ -183,7 +186,7 @@ body {
   padding: var(--spacing_inner-padding);
   border-radius: var(--radius_l);
   box-shadow: 0 0 8px 8px var(--color_sage);
-  overflow: hidden;
+  /* overflow: hidden;  to get rid of crisp edge */
 }
 
 .stream__background {
@@ -203,6 +206,14 @@ body {
 .stream__channel:hover .stream__background {
   filter: blur(0);
 }
+
+.stream-name {
+    position: relative;
+    text-align: center;
+    font-size: var(--font-size_s);
+    padding-top: 20px;
+}
+
 
 
 
@@ -401,6 +412,7 @@ body {
 
 .audio__ui {
     display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -411,8 +423,65 @@ body {
     border: var(--border_normal);
     border-radius: var(--radius_m);
     background-color: var(--color_yellow);
+    display: block;
 }
 
 .audio__playBtn:hover {
     background-color: var(--color_background_secondary);
+}
+
+.audio__volumeSlider {
+  width: 100%;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: #ccc;
+  outline: none;
+  transition: background 0.3s;
+  display: block;
+}
+
+/* Track */
+.audio__volumeSlider::-webkit-slider-runnable-track {
+  height: 6px;
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.audio__volumeSlider::-moz-range-track {
+  height: 6px;
+  background: #ccc;
+  border-radius: 3px;
+}
+
+/* Thumb */
+.audio__volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #555;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-top: -5px; /* center thumb */
+  transition: background 0.3s;
+}
+
+.audio__volumeSlider::-webkit-slider-thumb:hover {
+  background: #000;
+}
+
+.audio__volumeSlider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #555;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.audio__volumeSlider::-moz-range-thumb:hover {
+  background: #000;
 }
