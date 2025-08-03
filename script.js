@@ -106,9 +106,16 @@ document.querySelectorAll(".draggable").forEach(div => {
 // CHAT
 
 document.querySelectorAll(".chat__toggleBtn").forEach(button => {
-  button.addEventListener("click", (e) => {
-    document.getElementById('chat').classList.toggle('hidden');
-  });
-});
+  if (window.matchMedia("(max-width: 768px)").matches) {
 
+    button.addEventListener("click", () => {
+      window.open("https://radiorobida.chatango.com/", "_blank");
+    });
+  } else {
+
+    button.addEventListener("click", () => {
+      document.getElementById('chat').classList.toggle('hidden');
+    });
+  }
+});
 
