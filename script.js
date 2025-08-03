@@ -89,8 +89,8 @@ function dragElement(elmnt) {
 }
 
 function setRandomPosition(elmnt) {
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
+  const vw = window.innerWidth - 400;
+  const vh = window.innerHeight - 500;
   elmnt.style.left = Math.random() * (vw - elmnt.offsetWidth) + "px";
   elmnt.style.top = Math.random() * (vh - elmnt.offsetHeight) + "px";
 }
