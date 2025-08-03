@@ -186,9 +186,10 @@ body {
     justify-content: center;
     padding: var(--spacing_inner-padding);
     border-radius: var(--radius_l);
-    box-shadow: 0 0 1rem 1rem var(--color_sage);
+    box-shadow: inset 0 0 1rem 1rem var(--color_sage);
     aspect-ratio: 1 / 1;
-    /* overflow: hidden;  to get rid of crisp edge */
+    /* overflow: hidden; */
+    /* ^^ to get rid of crisp edge */
 }
 
 .stream__background {
@@ -226,9 +227,23 @@ body {
     grid-column: 4 / span 6;
 }
 .stream__channel--mid .stream__name{
-    top: -4.5rem;
+    top: -3rem;
 }
 }
+/* @media (max-width: 767px) {
+  .stream {
+    position: relative;
+    display: block;
+    top: auto;
+    left: auto;
+    padding: 0 1rem;
+    transform: none;
+  }
+  .stream__channel--mid {
+    order: -1;
+    grid-column: 4 / span 6;
+  }
+} */
 
 
 
@@ -465,6 +480,11 @@ body {
     display: block;
 }
 @media (max-width: 900px) {
+  .audio__volumeSlider {
+    display: none;
+}
+}
+@media (max-width: 900px) {
   .stream__channel--mid .audio__volumeSlider {
     top: -3rem;
 }
@@ -509,3 +529,4 @@ body {
 .audio__volumeSlider::-moz-range-thumb:hover {
   background: var(--color_yellow);
 }
+
