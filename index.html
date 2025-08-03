@@ -13,11 +13,13 @@
             <div class="header__title">
                 <a href="" class="site-title">Radio<br>Gardening<br>Summer School</a>
             </div>
-            <nav class="header__nav">
-                <button onclick="toggleAside()" class="button">Join the chat</button>
-                <button id="toggleScheduleBtn" class="button">Check the schedule</button>
-                <a href="https://robidacollective.com/projects/academy-of-margins/summer-school-of-the-academy-of-margins-2025" class="button" target="_blank">More info</a>
-            </nav>
+            <div>
+                <nav class="header__nav">
+                    <button class="chat__toggleBtn button">Join the chat</button>
+                    <button class="schedule__toggleBtn button">Check the schedule</button>
+                    <a href="https://robidacollective.com/projects/academy-of-margins/summer-school-of-the-academy-of-margins-2025" class="button" target="_blank">More info</a>
+                </nav>
+            </div>
         </header>
         <main class="main">
             <section class="section">
@@ -30,9 +32,9 @@
                                 <button class="button audio__playBtn">Listen in</button>
                             </div>
                         </div>
-                        <p class="stream-name">Ambient Topolò 🔴</p>
+                        <p class="stream__name">Ambient Topolò 🔴</p>
                     </div>
-                    <div class="stream__channel" id="two">
+                    <div class="stream__channel stream__channel--mid" id="two">
                         <div class="stream__background"></div>
                         <div class="audio">
                             <audio class="audio__source" src="https://radio.goodtimesbadtimes.club/radio/8060/radio.mp3"></audio>
@@ -40,7 +42,7 @@
                                 <button class="button audio__playBtn">Listen in</button>
                             </div>
                         </div>
-                        <p class="stream-name">Channel 1</p>
+                        <p class="stream__name">Channel 1</p>
                     </div>
                     <div class="stream__channel" id="three">
                         <div class="stream__background"></div>
@@ -50,19 +52,23 @@
                                 <button class="button audio__playBtn">Listen in</button>
                             </div>
                         </div>
-                        <p class="stream-name">Walkie-Talkie 🔴</p>
+                        <p class="stream__name">Walkie-Talkie 🔴</p>
                     </div>
                 </div>
-            </section>
-                <div id="schedule" class="schedule hidden">
-                    <ul id="scheduleList" class="schedule__list"></ul>
+        </main>
+        <aside>
+            <section>
+                <div id="schedule" class="draggable schedule hidden">
+                    <button class="button schedule__toggleBtn draggable__toggleBtn">&times;</button>
+                    <ul id="scheduleList" class="schedule__list draggable__content"></ul>
                 </div>
             </section>
-        </main>
-        <aside id="aside" class="aside">
-            <div class="chat">
-             
-            </div>
+            <section>
+                <div id="chat" class="chat draggable hidden">
+                    <button class="button chat__toggleBtn draggable__toggleBtn">&times;</button>
+                    <div class="chat__embed draggable__content"></div>
+                </div>
+            </section>
         </aside>
         <footer class="footer">
             <div class="timeline-wrapper">

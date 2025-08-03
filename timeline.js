@@ -2,10 +2,6 @@ const timeline = document.getElementById('timeline');
 const track = timeline.querySelector('.timeline__track');
 const toggleViewBtn = document.getElementById('toggleViewBtn');
 
-// const modal = document.getElementById('eventModal');
-// const modalTitle = document.getElementById('modalTitle');
-// const modalContent = document.getElementById('modalContent');
-// const modalClose = document.querySelector('.modal-close');
 
 const events = [];
 
@@ -71,12 +67,25 @@ function drawPlaybar() {
   function updateBar() {
     const now = new Date();
     const progress = Math.max(0, Math.min(1, (now - startDate) / (endDate - startDate)));
-    bar.style.width = (progress * 100) + '%';
+    const percent = progress * 100;
+    bar.style.width = percent + '%';
+
     requestAnimationFrame(updateBar);
   }
 
   updateBar();
+
+  // Scroll to "now" once in daily view
+  if (timeline.classList.contains('timeline--day')) {
+    requestAnimationFrame(() => {
+      const barX = ((new Date() - startDate) / (endDate - startDate)) * track.scrollWidth;
+      const timelineRect = timeline.getBoundingClientRect();
+      timeline.scrollLeft = Math.max(0, barX - timelineRect.width / 2);
+    });
+  }
 }
+
+
 
 // Helper to extract Are.na or regular image URLs from a string
 function extractImageUrl(text) {
@@ -92,6 +101,35 @@ function extractImageUrl(text) {
 
   return null;
 }
+
+function simpleMarkdownToHtml(md) {
+  if (!md) return '';
+
+  // Escape HTML special chars first
+  md = md.replace(/&/g, '&amp;')
+         .replace(/</g, '&lt;')
+         .replace(/>/g, '&gt;');
+
+  // Headers
+  md = md.replace(/^### (.*$)/gim, '<h3>$1</h3>')
+         .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+         .replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+  // Bold, italic
+  md = md.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+         .replace(/\*(.*?)\*/gim, '<em>$1</em>');
+
+  // Links
+  md = md.replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+
+  // Line breaks and paragraphs
+  md = md.replace(/\n{2,}/g, '</p><p>')
+         .replace(/\n/g, '<br>')
+         .replace(/^(.+)$/gim, '<p>$1</p>');
+
+  return md.trim();
+}
+
 
 function drawEvents() {
   const stack = Array(20).fill(0);
@@ -127,8 +165,8 @@ function highlightScheduleItem(event) {
   const item = scheduleList.querySelector(`[data-event-index="${index}"]`);
   if (item) {
     schedule.classList.remove('hidden');
-    item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    scheduleList.querySelectorAll('.schedule-item').forEach(i => i.classList.remove('active'));
+    item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scheduleList.querySelectorAll('.schedule__item').forEach(i => i.classList.remove('active'));
     item.classList.add('active');
 
     // Remove highlight after 3 seconds (optional)
@@ -153,7 +191,7 @@ function toggleView() {
 toggleViewBtn.addEventListener('click', toggleView);
 
 // ARE.NA FETCH
-fetch("https://api.are.na/v2/channels/robida-radio-schedule-test/contents?access_token=eAbi6dA3i-tCZInyJd4VStOtfEJ8EKuvPepCqBhYRW4")
+fetch("https://api.are.na/v2/channels/robida-radio-schedule-test/contents?per=100")
   .then((response) => response.ok ? response.json() : Promise.reject("Network error"))
   .then(data => {
     parseArenaEvents(data);
@@ -163,8 +201,14 @@ fetch("https://api.are.na/v2/channels/robida-radio-schedule-test/contents?access
 
 function parseArenaEvents(data) {
   events.length = 0;
+
+  console.log("Total fetched blocks:", data.contents.length);
+
   data.contents.forEach(item => {
-    if (!item.description) return;
+    if (!item.description) {
+      console.warn("Skipped block with no description:", item.title);
+      return;
+    }
 
     const parts = item.description.split('/');
     const start = new Date(parts[0].trim());
@@ -177,20 +221,26 @@ function parseArenaEvents(data) {
         label: item.title,
         description: item.image?.display?.url || item.content || ''
       });
+    } else {
+      console.warn("Skipped block with invalid date:", item.title, item.description);
     }
   });
 
-  buildScheduleView(); // Add this
+  console.log("Events parsed:", events.length);
+
+  buildScheduleView();
 }
+
 
 
 const schedule = document.getElementById('schedule');
 const scheduleList = document.getElementById('scheduleList');
 const toggleScheduleBtn = document.getElementById('toggleScheduleBtn');
 
-// Toggle schedule visibility
-toggleScheduleBtn.addEventListener('click', () => {
-  schedule.classList.toggle('hidden');
+document.querySelectorAll(".schedule__toggleBtn").forEach(button => {
+  button.addEventListener("click", (e) => {
+    schedule.classList.toggle('hidden');
+  });
 });
 
 // Add this to the end of parseArenaEvents()
@@ -201,7 +251,7 @@ function buildScheduleView() {
 
   sorted.forEach((event, index) => {
     const li = document.createElement('li');
-    li.className = 'schedule-item';
+    li.className = 'schedule__item';
     li.dataset.eventIndex = index;
 
     const startDate = new Date(event.start);
@@ -221,7 +271,8 @@ function buildScheduleView() {
     } else if (event.description.startsWith('http')) {
       contentHTML = `<a href="${event.description}" target="_blank" rel="noopener">${event.description}</a>`;
     } else {
-      contentHTML = `<p>${event.description}</p>`;
+      const html = simpleMarkdownToHtml(event.description);
+      contentHTML = `<div class="markdown">${html}</div>`;
     }
 
     li.innerHTML = `

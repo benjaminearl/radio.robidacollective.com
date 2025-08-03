@@ -110,21 +110,14 @@ body {
     display: flex;
     justify-content: space-between;
 }
-.header__nav {
-    align-items: right;
+.site-title {
+    white-space: nowrap;
 }
-.header__nav__link {
-    display: block;
-    text-decoration: none;
-    font-family: inherit;
-    font-size: var(--font-size_s);
-    cursor: pointer;
-    background: none;
-    color: var(--color_text_normal);
-    border: var(--border_normal);
-    border-radius: var(--radius_m);
-    padding: 0 var(--spacing_inner-padding);
-    margin-bottom: var(--spacing_xs);
+.header__nav {
+    justify-content: end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing_s);
 }
 
 .main {
@@ -175,18 +168,27 @@ body {
 
 
 .stream {
-    width: calc(100vw - var(--spacing_l));
-    height: 500px;
-    display: flex;
-    gap: var(--spacing_l);
+    position: fixed;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    width: calc(100vw - var(--spacing_xl));
+    display: inline-grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 2rem;
 }
 .stream__channel {
-  position: relative;
-  flex: 1;
-  padding: var(--spacing_inner-padding);
-  border-radius: var(--radius_l);
-  box-shadow: 0 0 8px 8px var(--color_sage);
-  /* overflow: hidden;  to get rid of crisp edge */
+    position: relative;
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing_inner-padding);
+    border-radius: var(--radius_l);
+    box-shadow: 0 0 1rem 1rem var(--color_sage);
+    aspect-ratio: 1 / 1;
+    /* overflow: hidden;  to get rid of crisp edge */
 }
 
 .stream__background {
@@ -207,13 +209,26 @@ body {
   filter: blur(0);
 }
 
-.stream-name {
-    position: relative;
+.stream__name {
+    position: absolute;
+    bottom: -3rem;
     text-align: center;
     font-size: var(--font-size_s);
-    padding-top: 20px;
+    z-index: 100;
 }
 
+@media (max-width: 900px) {
+  .stream__channel {
+    grid-column: span 6;
+  }
+  .stream__channel--mid {
+    order: -1;
+    grid-column: 4 / span 6;
+}
+.stream__channel--mid .stream__name{
+    top: -3rem;
+}
+}
 
 
 
@@ -297,17 +312,37 @@ body {
     background: #000;
 }
 
+/* || DRAGGABLE */
+
+.draggable {
+    position: absolute;
+    cursor: move;
+    z-index: 999;
+}
+.draggable__content {
+    width: 400px;
+    height: 500px;
+    max-width: calc(100vw - var(--spacing_xl));
+    max-height: calc(100vh - var(--spacing_xl));
+}
+.draggable__toggleBtn {
+    position: absolute;
+    top: var(--spacing_m);
+    right: var(--spacing_m);
+}
+
+@media (max-width: 900px) {
+    .draggable {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
 /* || SCHEDULE */
 .schedule {
-    position: fixed;
-    top: 5rem;
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    margin-top: 10px;
-    padding: 10px;
-    background: #f9f9f9;
-    width: 400px;
+
 }
 
 .schedule.hidden {
@@ -317,18 +352,22 @@ body {
 .schedule__list {
     list-style: none;
     margin: 0;
-    padding: 0;
+    overflow-y: auto;
+    background: var(--color_brown);
+    color: var(--color_sage);
+    border-radius: var(--radius_m);
+    padding: var(--spacing_inner-padding);
 }
 
-.schedule-item {
+.schedule__item {
     margin: 5px 0;
     padding: 8px;
     border-bottom: 1px solid #ddd;
-    cursor: pointer;
+    min-height: 500px;
 }
 
-.schedule-item.active {
-    background-color: #e0f7fa;
+.schedule__item.active {
+    /* background-color: #e0f7fa; */
 }
 
 .schedule-content img {
@@ -336,43 +375,24 @@ body {
   margin-top: 6px;
 }
 
-/* Modal Popup */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
+/* || CHAT */
+.chat {
+
+}
+
+.chat.hidden {
     display: none;
 }
 
-.modal-content {
+.chat__embed {
+    list-style: none;
+    margin: 0;
+    width: 400px;
+    height: 500px;
+    overflow-y: auto;
     background: white;
-    max-width: 90vw;
-    max-height: 90vh;
-    padding: 20px;
-    border-radius: 4px;
-    overflow: auto;
-    position: relative;
-}
-
-.modal-close {
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.modal img {
-    max-width: 100%;
-    height: auto;
+    border-radius: var(--radius_m);
+    padding: var(--spacing_inner-padding);
 }
 
 
