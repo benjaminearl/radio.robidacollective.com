@@ -3,6 +3,7 @@
     "user": "bnjmnearl",
     "text": "This is a test announcement. Do all the pieces of the puzzle work?",
     "date": "2025-08-03 10:07"
+<<<<<<< Updated upstream
   },
   {
     "user": "bnjmnearl",
@@ -13,5 +14,7 @@
     "user": "bnjmnearl",
     "text": "Another timezone test. The time is 12:40",
     "date": "2025-08-03 10:40"
+=======
+>>>>>>> Stashed changes
   }
 ]

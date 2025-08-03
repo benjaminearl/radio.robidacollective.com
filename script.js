@@ -8,17 +8,17 @@ document.addEventListener("DOMContentLoaded", () => {
     playBtn.addEventListener("click", () => {
       if (audio.paused) {
         audio.play();
-        playBtn.textContent = "Tune out";
+        playBtn.textContent = "Listen out";
         streamChannel.classList.add("clear");
       } else {
         audio.pause();
-        playBtn.textContent = "Tune in";
+        playBtn.textContent = "Listen in";
         streamChannel.classList.remove("clear");
       }
     });
 
     audio.addEventListener("ended", () => {
-      playBtn.textContent = "Tune in";
+      playBtn.textContent = "Listen in";
       streamChannel.classList.remove("clear");
     });
   });

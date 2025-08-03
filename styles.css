@@ -372,6 +372,7 @@ body {
     margin-top: var(--spacing_m);
     background-color: var(--color_background_primary);
     box-shadow: 0 0 1rem var(--color_yellow);
+    font-size: var(--font-size_s);
 }
 .announcements__marquee {
     padding: var(--spacing_s);

@@ -9,7 +9,7 @@ const toggleViewBtn = document.getElementById('toggleViewBtn');
 
 const events = [];
 
-let startDate = new Date('2025-07-29T00:00:00');
+let startDate = new Date('2025-08-04T00:00:00');
 let endDate = new Date('2025-08-10T23:59:59');
 
 function enforceViewByScreenSize() {

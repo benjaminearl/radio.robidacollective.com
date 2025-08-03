@@ -1,7 +1,10 @@
 import os
 import requests
 import json
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+
+# CEST timezone (UTC+2)
+CEST = timezone(timedelta(hours=2))
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 CHAT_ID = os.environ.get("CHAT_ID")
@@ -37,7 +40,7 @@ except:
 
 print(f"🔄 Fetching updates after update_id: {last_update_id}")
 
-# Fetch updates with offset = last_update_id + 1 to get only new updates
+# Fetch updates
 try:
     response = requests.get(f"{API_URL}/getUpdates", params={"offset": last_update_id + 1, "timeout": 10})
     response.raise_for_status()
@@ -63,7 +66,6 @@ for i, upd in enumerate(updates):
     if update_id > max_update_id:
         max_update_id = update_id
 
-    # Get message or channel_post (handle both)
     msg = upd.get("message") or upd.get("channel_post")
     if not msg:
         print(f"⚠️ Update #{update_id} has no message or channel_post, skipping")
@@ -77,10 +79,15 @@ for i, upd in enumerate(updates):
     # --- Handle Announcements (text messages) ---
     if "text" in msg:
         username = msg.get("from", {}).get("username", "channel")
+
+        # Convert Telegram timestamp to UTC then CEST
+        dt_utc = datetime.utcfromtimestamp(msg["date"]).replace(tzinfo=timezone.utc)
+        dt_cest = dt_utc.astimezone(CEST)
+
         ann = {
             "user": username,
             "text": msg["text"],
-            "date": datetime.fromtimestamp(msg["date"]).strftime("%Y-%m-%d %H:%M")
+            "date": dt_cest.strftime("%Y-%m-%d %H:%M")  # Store in CEST
         }
         announcements.append(ann)
         print(f"✅ Update #{update_id} announcement saved: {ann}")
