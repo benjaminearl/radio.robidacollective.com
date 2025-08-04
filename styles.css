@@ -190,6 +190,7 @@ body {
     aspect-ratio: 1 / 1;
     /* overflow: hidden; */
     /* ^^ to get rid of crisp edge */
+    max-width: 400px;
 }
 
 .stream__background {
