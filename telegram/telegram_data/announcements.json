@@ -1,11 +1,6 @@
 [
   {
     "user": "bnjmnearl",
-    "text": "This is a test announcement. Do all the pieces of the puzzle work?",
-    "date": "2025-08-03 12:07"
-  },
-  {
-    "user": "bnjmnearl",
     "text": "This is a announcement to see if we are actually using the right time zone",
     "date": "2025-08-03 12:34"
   },
