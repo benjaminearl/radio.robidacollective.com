@@ -1,21 +1,6 @@
 [
   {
     "user": "channel",
-    "text": "Jack jammin\u2019 before dinner",
-    "date": "2025-08-04 19:13"
-  },
-  {
-    "user": "channel",
-    "text": "Exhausted FM",
-    "date": "2025-08-04 19:14"
-  },
-  {
-    "user": "channel",
-    "text": "Mushroom music",
-    "date": "2025-08-04 19:29"
-  },
-  {
-    "user": "channel",
     "text": "Presentation of the summer school website by Kirsten and Ben in 5 min",
     "date": "2025-08-04 21:10"
   },
@@ -38,5 +23,15 @@
     "user": "bnjmnearl",
     "text": "And the ambient channel is still streaming from the Vida and Alja\u017e\u2019s house",
     "date": "2025-08-05 10:27"
+  },
+  {
+    "user": "other_kat",
+    "text": "https://www.are.na/block/29403941",
+    "date": "2025-08-05 19:21"
+  },
+  {
+    "user": "other_kat",
+    "text": "https://anarchy.translocal.jp/non-japanese/radiorethink.html",
+    "date": "2025-08-05 19:23"
   }
 ]
