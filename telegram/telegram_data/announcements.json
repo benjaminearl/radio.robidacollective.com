@@ -1,20 +1,5 @@
 [
   {
-    "user": "channel",
-    "text": "On Soundings - tune in on TBC or 98.8 MHz on the FM to hear some snippets of this morning\u2019s workshop",
-    "date": "2025-08-05 09:47"
-  },
-  {
-    "user": "channel",
-    "text": "10:30 starting with Felix\u2019s \u201cWhat if these trees could speak?\u201d",
-    "date": "2025-08-05 10:11"
-  },
-  {
-    "user": "bnjmnearl",
-    "text": "And the ambient channel is still streaming from the Vida and Alja\u017e\u2019s house",
-    "date": "2025-08-05 10:27"
-  },
-  {
     "user": "other_kat",
     "text": "https://www.are.na/block/29403941",
     "date": "2025-08-05 19:21"
@@ -43,5 +28,10 @@
     "user": "channel",
     "text": "Soon online",
     "date": "2025-08-06 08:56"
+  },
+  {
+    "user": "channel",
+    "text": "At 10:15 Rituals for a Relational Language with Katja Berends and Luke Cohlen on the main channel!",
+    "date": "2025-08-06 10:02"
   }
 ]
