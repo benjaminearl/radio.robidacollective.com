@@ -69,7 +69,6 @@ function drawPlaybar() {
     const progress = Math.max(0, Math.min(1, (now - startDate) / (endDate - startDate)));
     const percent = progress * 100;
     bar.style.width = percent + '%';
-
     requestAnimationFrame(updateBar);
   }
 
@@ -256,6 +255,7 @@ function buildScheduleView() {
 
     const startDate = new Date(event.start);
     const endDate = new Date(event.end);
+    console.log(startDate, endDate)
 
     const dateStr = startDate.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
     const startTimeStr = startDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });

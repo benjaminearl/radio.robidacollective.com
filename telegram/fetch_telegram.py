@@ -30,7 +30,7 @@ IMAGE_DIR = "telegram/telegram_images"
 os.makedirs(DATA_DIR, exist_ok=True)
 os.makedirs(IMAGE_DIR, exist_ok=True)
 
-# Load last processed update ID to avoid duplicate processing
+# Load last processed update ID
 last_update_id_path = os.path.join(DATA_DIR, "last_update_id.txt")
 try:
     with open(last_update_id_path, "r") as f:
@@ -57,7 +57,14 @@ updates = data.get("result", [])
 print(f"📬 Received {len(updates)} updates")
 
 announcements = []
-channel_images = {}
+
+# Load existing channel_images.json so previous images are preserved
+channel_images_path = os.path.join(DATA_DIR, "channel_images.json")
+if os.path.exists(channel_images_path):
+    with open(channel_images_path, "r", encoding="utf-8") as f:
+        channel_images = json.load(f)
+else:
+    channel_images = {}
 
 max_update_id = last_update_id
 
@@ -122,6 +129,7 @@ for i, upd in enumerate(updates):
             with open(local_path, "wb") as img_file:
                 img_file.write(image_data)
             print(f"✅ Image saved to: {local_path}")
+            # ✅ Update only this channel's image
             channel_images[div_id] = f"{IMAGE_DIR}/{image_name}"
         except Exception as e:
             print(f"❌ Error saving image for update #{update_id}: {e}")
@@ -134,15 +142,12 @@ if announcements:
 else:
     print("\n📭 No new announcements to save.")
 
-# Save channel images JSON
-if channel_images:
-    with open(os.path.join(DATA_DIR, "channel_images.json"), "w", encoding="utf-8") as f:
-        json.dump(channel_images, f, indent=2)
-    print(f"\n💾 Saved {len(channel_images)} channel images to {DATA_DIR}/channel_images.json")
-else:
-    print("\n📭 No new channel images to save.")
+# ✅ Save channel_images.json — includes previously existing entries
+with open(channel_images_path, "w", encoding="utf-8") as f:
+    json.dump(channel_images, f, indent=2)
+print(f"\n💾 Saved {len(channel_images)} channel images to {channel_images_path}")
 
-# Save max update_id for next run
+# Save max update_id
 with open(last_update_id_path, "w") as f:
     f.write(str(max_update_id))
 print(f"\n🔖 Saved last_update_id = {max_update_id}")
