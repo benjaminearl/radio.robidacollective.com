@@ -190,7 +190,7 @@ function toggleView() {
 toggleViewBtn.addEventListener('click', toggleView);
 
 // ARE.NA FETCH
-fetch("https://api.are.na/v2/channels/robida-radio-schedule-test/contents?per=100")
+fetch("https://api.are.na/v2/channels/radio-gardening-schedule/contents?per=100")
   .then((response) => response.ok ? response.json() : Promise.reject("Network error"))
   .then(data => {
     parseArenaEvents(data);
@@ -200,8 +200,6 @@ fetch("https://api.are.na/v2/channels/robida-radio-schedule-test/contents?per=10
 
 function parseArenaEvents(data) {
   events.length = 0;
-
-  console.log("Total fetched blocks:", data.contents.length);
 
   data.contents.forEach(item => {
     if (!item.description) {
@@ -255,7 +253,6 @@ function buildScheduleView() {
 
     const startDate = new Date(event.start);
     const endDate = new Date(event.end);
-    console.log(startDate, endDate)
 
     const dateStr = startDate.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
     const startTimeStr = startDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
