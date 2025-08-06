@@ -119,3 +119,39 @@ document.querySelectorAll(".chat__toggleBtn").forEach(button => {
   }
 });
 
+
+//SUNSET & SUNRISE
+
+const apiUrl = 'https://api.sunrise-sunset.org/json?lat=46.177278&lng=13.603986&tzid=Europe/Ljubljana';
+
+fetch(apiUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+    parseSunTimes(data)
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
+
+function parseSunTimes(data) {
+  const sunset = data.results.sunset
+  const sunrise = data.results.sunrise
+  const currentTopoloTime = new Date().toLocaleTimeString("en-US", { timeZone: "Europe/Ljubljana" });
+
+  console.log(sunset, sunrise)
+  console.log(currentTopoloTime)
+
+  if(currentTopoloTime < sunset){
+    console.log("the sun has risen")
+  }else{
+    console.log("the sun has set")
+    document.querySelector("link[href='css/day-style.css']").href = "css/night-style.css";
+  }
+}

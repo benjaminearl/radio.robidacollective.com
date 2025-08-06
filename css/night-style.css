@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Briz';
-  src: url(fonts/Briz.otf) format("opentype");
+  src: url(/fonts/Briz.otf) format("opentype");
 }
 
 :root {
@@ -91,8 +91,8 @@ html {
 }
 
 body {
-    background-color: var(--color_background_primary);
-    color: var(--color_text_normal);
+    background-color: var(--color_brown);
+    color: var(--color_sage);
     font-family: var(--font_primary);
     margin: 0;
     -webkit-font-smoothing: antialiased;
@@ -154,8 +154,8 @@ body {
 .button {
     border: var(--border_muted);
     border-radius: var(--radius_m);
-    background-color: var(--color_background_primary);
-    color: var(--color_text_normal);
+    background-color: var(--color_brown);
+    color: var(--color_sage);
     font-family: inherit;
     font-size: var(--font-size_button);
     text-decoration: none;
@@ -292,7 +292,7 @@ body {
     bottom: 0;
     font-size: var(--font-size_s);
     width: auto;
-    border-left: var(--border_normal);
+    border-left: 1px solid var(--color_sage);
     height: 1rem;
     padding: var(--spacing_xs) var(--spacing_s);
 }
@@ -329,7 +329,7 @@ body {
     left: 0;
     right: 0;
     height: 1px;
-    background: #000;
+    background: var(--color_sage)
 }
 
 /* || DRAGGABLE */
@@ -373,8 +373,8 @@ body {
     list-style: none;
     margin: 0;
     overflow-y: auto;
-    background: var(--color_brown);
-    color: var(--color_sage);
+    background: var(--color_sage);
+    color: var(--color_brown);
     border-radius: var(--radius_m);
     padding: var(--spacing_inner-padding);
 }
@@ -421,7 +421,7 @@ body {
     border: var(--border_muted);
     border-radius: var(--radius_m);
     margin-top: var(--spacing_m);
-    background-color: var(--color_background_primary);
+    background-color: var(--color_brown);
     box-shadow: 0 0 1rem var(--color_yellow);
     font-size: var(--font-size_s);
 }
@@ -433,7 +433,7 @@ body {
 /* || TXT */
 .site-title {
     font-family: var(--font_secondary);
-    color: var(--color_text_normal);
+    color: var(--color_sage);
     text-transform: uppercase;
     font-size: var(--font-size_title);
     text-decoration: none;

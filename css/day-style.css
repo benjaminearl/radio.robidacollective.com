@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Briz';
-  src: url(fonts/Briz.otf) format("opentype");
+  src: url(/fonts/Briz.otf) format("opentype");
 }
 
 :root {
@@ -499,7 +499,7 @@ body {
 .audio__volumeSlider::-webkit-slider-runnable-track,
 .audio__volumeSlider::-moz-range-track {
   height: 0.5rem;
-  background-color: var(--color_sage);
+  background-color: var(--color_brown);
   border-radius: var(--radius_m);
 }
 
