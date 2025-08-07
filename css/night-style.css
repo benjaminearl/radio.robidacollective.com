@@ -220,7 +220,6 @@ body {
     bottom: -3rem;
     text-align: center;
     font-size: var(--font-size_s);
-    z-index: 100;
 }
 
 @media (max-width: 900px) {

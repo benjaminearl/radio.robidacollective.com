@@ -220,7 +220,7 @@ body {
     bottom: -3rem;
     text-align: center;
     font-size: var(--font-size_s);
-    z-index: 100;
+    z-index: 3;
 }
 
 @media (max-width: 900px) {
@@ -499,7 +499,7 @@ body {
 .audio__volumeSlider::-webkit-slider-runnable-track,
 .audio__volumeSlider::-moz-range-track {
   height: 0.5rem;
-  background-color: var(--color_sage);
+  background-color: var(--color_brown);
   border-radius: var(--radius_m);
 }
 

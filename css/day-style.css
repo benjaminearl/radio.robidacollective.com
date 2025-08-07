@@ -220,7 +220,6 @@ body {
     bottom: -3rem;
     text-align: center;
     font-size: var(--font-size_s);
-    z-index: 100;
 }
 
 @media (max-width: 900px) {
@@ -454,6 +453,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 4;
 }
 
 .audio__playBtn {
