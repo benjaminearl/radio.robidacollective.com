@@ -200,7 +200,7 @@ fetch("https://api.are.na/v2/channels/radio-gardening-schedule/contents?per=100"
 
 function parseArenaEvents(data) {
   events.length = 0;
-  console.log(data)
+  console.log(data);
 
   data.contents.forEach(item => {
     if (!item.description) {

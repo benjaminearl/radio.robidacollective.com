@@ -182,6 +182,7 @@ body {
     transform: translate(-50%, -50%);
     width: calc(100vw - var(--spacing_xl));
     max-width: calc(var(--main-height) * 2);
+    min-width: 300px;
     display: inline-grid;
     grid-template-columns: repeat(12, 1fr);
     column-gap: 2rem;
@@ -195,7 +196,7 @@ body {
     justify-content: center;
     padding: var(--spacing_inner-padding);
     border-radius: var(--radius_l);
-    box-shadow: inset 0 0 1rem 1rem var(--color_sage);
+    box-shadow: 0 0 0.5rem 0.5rem var(--color_sage);
     aspect-ratio: 1 / 1;
     /* overflow: hidden; */
     /* ^^ to get rid of crisp edge */
@@ -203,21 +204,24 @@ body {
 }
 
 .stream__background {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: var(--color_background_secondary);
-  border-radius: var(--radius_l);
-  filter: blur(5px);
-  transition: filter 0.5s ease;
-  z-index: 0;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--color_background_secondary);
+    box-shadow: inset 0 0 0.5rem 0.5rem var(--color_sage);
+    border-radius: var(--radius_l);
+    filter: blur(5px);
+    transition: filter 0.5s ease;
+    z-index: 0;
 }
 
 .stream__channel.clear .stream__background {
   filter: blur(0);
+  box-shadow: none;
 }
 
 .stream__channel:hover .stream__background {
   filter: blur(0);
+  box-shadow: none;
 }
 
 .stream__name {
