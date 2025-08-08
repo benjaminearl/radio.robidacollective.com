@@ -5,8 +5,8 @@ const toggleViewBtn = document.getElementById('toggleViewBtn');
 
 const events = [];
 
-let startDate = new Date('2025-08-04T00:00:00');
-let endDate = new Date('2025-08-10T23:59:59');
+let startDate = new Date('2025-08-09T00:00:00');
+let endDate = new Date('2025-08-09T23:59:59');
 
 function enforceViewByScreenSize() {
   const isMobile = window.innerWidth < 768;
@@ -33,7 +33,7 @@ function updateTimeline(start, end) {
 
 function drawDateMarkers() {
   const msPerDay = 86400000;
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 1; i++) {
     const date = new Date(startDate.getTime() + i * msPerDay);
     const label = date.toLocaleDateString(undefined, { weekday: 'short', day: '2-digit' });
     const marker = document.createElement('div');
@@ -46,7 +46,7 @@ function drawDateMarkers() {
       dayCell.appendChild(marker);
       track.appendChild(dayCell);
     } else {
-      marker.style.left = (i / 7 * 100) + '%';
+      marker.style.left = (i / 1 * 100) + '%';
       track.appendChild(marker);
     }
   }
@@ -190,7 +190,7 @@ function toggleView() {
 toggleViewBtn.addEventListener('click', toggleView);
 
 // ARE.NA FETCH
-fetch("https://api.are.na/v2/channels/radio-gardening-schedule/contents?per=100")
+fetch("https://api.are.na/v2/channels/robida-radio-gardening-public-programme/contents?per=100")
   .then((response) => response.ok ? response.json() : Promise.reject("Network error"))
   .then(data => {
     parseArenaEvents(data);

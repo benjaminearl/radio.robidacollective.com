@@ -144,13 +144,15 @@ function parseSunTimes(data) {
   const sunrise = data.results.sunrise
   const currentTopoloTime = new Date().toLocaleTimeString("en-US", { timeZone: "Europe/Ljubljana" });
 
-  console.log(sunset, sunrise, "lol")
+  console.log(sunset, sunrise)
   console.log(currentTopoloTime)
 
   if(currentTopoloTime < sunset){
     console.log("the sun has risen")
   }else{
     console.log("the sun has set")
-    document.querySelector("link[href='css/day-style.css']").href = "css/night-style.css";
+    document.documentElement.style.setProperty('--color_background_primary', 'var(--color_brown)');
+    document.documentElement.style.setProperty('--color_background_secondary', 'var(--color_sage)');
+    document.documentElement.style.setProperty('--color_text_normal', 'var(--color_sage)');
   }
 }
