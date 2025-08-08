@@ -361,7 +361,11 @@ body {
     margin: 5px 0;
     padding: 8px;
     border-bottom: 1px solid var(--color_border_muted);
-    min-height: 500px;
+    /* min-height: 500px; */
+}
+
+.active strong {
+    text-decoration: underline;
 }
 
 .schedule-content img {
