@@ -233,8 +233,6 @@ body {
 }
 
 
-
-
 /* || TIMELINE */
 
 @media (max-width: 767px) {
@@ -441,7 +439,7 @@ body {
 .audio__playBtn {
     cursor: pointer;
     background: none;
-    color: var(--color_text_normal);
+    color: var(--color_brown);
     border: var(--border_normal);
     border-radius: var(--radius_m);
     background-color: var(--color_yellow);
@@ -481,7 +479,7 @@ body {
 .audio__volumeSlider::-webkit-slider-runnable-track,
 .audio__volumeSlider::-moz-range-track {
   height: 0.5rem;
-  background-color: var(--color_brown);
+  background-color: var(--color_background_tertiary);
   border-radius: var(--radius_m);
 }
 

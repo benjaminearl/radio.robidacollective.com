@@ -121,8 +121,7 @@ document.querySelectorAll(".chat__toggleBtn").forEach(button => {
 
 
 //SUNSET & SUNRISE
-
-const apiUrl = 'https://api.sunrise-sunset.org/json?lat=46.177278&lng=13.603986&tzid=Europe/Ljubljana';
+const apiUrl = 'https://api.sunrise-sunset.org/json?lat=46.177278&lng=13.603986';
 
 fetch(apiUrl)
   .then(response => {
@@ -140,20 +139,31 @@ fetch(apiUrl)
 
 
 function parseSunTimes(data) {
-  const sunset = data.results.sunset
-  const sunrise = data.results.sunrise
-  const currentTopoloTime = new Date().toLocaleTimeString("en-US", { timeZone: "Europe/Ljubljana" });
+  const now = new Date();
 
-  console.log(sunset, sunrise)
-  console.log(currentTopoloTime)
+  // Parse sunrise/sunset from API as UTC, then convert to Ljubljana time
+  const sunriseUTC = new Date(`1970-01-01T${data.results.sunrise}Z`);
+  const sunsetUTC  = new Date(`1970-01-01T${data.results.sunset}Z`);
 
-  if(currentTopoloTime < sunset){
-    console.log("the sun has risen")
-  }else{
-    console.log("the sun has set")
+  const sunriseLjubljana = new Date(sunriseUTC.toLocaleString("en-US", { timeZone: "Europe/Ljubljana" }));
+  const sunsetLjubljana  = new Date(sunsetUTC.toLocaleString("en-US", { timeZone: "Europe/Ljubljana" }));
+
+  const nowLjubljana = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Ljubljana" }));
+
+  console.log("Sunrise:", sunriseLjubljana);
+  console.log("Sunset:", sunsetLjubljana);
+  console.log("Now:", nowLjubljana);
+
+  if (nowLjubljana < sunsetLjubljana) {
+    console.log("the sun has risen");
+  } else {
+    console.log("the sun has set");
     document.documentElement.style.setProperty('--color_background_primary', 'var(--color_brown)');
     document.documentElement.style.setProperty('--color_background_secondary', 'var(--color_sage)');
     document.documentElement.style.setProperty('--color_text_normal', 'var(--color_sage)');
     document.documentElement.style.setProperty('--color_border_normal', 'var(--color_sage)');
+    document. querySelectorAll(".audio__volumeSlider").forEach(item => {
+      item.style.backgroundColor = "var(--color_sage)"
+    })
   }
 }
