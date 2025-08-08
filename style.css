@@ -131,19 +131,6 @@ body {
     height: var(--main-height);
 }
 
-.aside {
-    position: fixed;
-    top: 110px;
-    right: 0;
-    height: 100%;
-    width: 0;
-    background-color: var(--color_background_primary);
-    transition: all 0.5s ease-in-out;
-}
-.aside--open {
-    width: 400px;
-}
-
 .footer {
    /* margin: var(--spacing_section-margin);  */
    position: fixed;
@@ -296,7 +283,7 @@ body {
 .timeline__event {
     position: absolute;
     height: 1rem;
-    background-color: var(--color_sage);
+    background-color: var(--color_background_primary);
     border: var(--border_normal);
     border-radius: var(--radius_m);
     padding: 0 2px;
@@ -311,10 +298,8 @@ body {
     position: absolute;
     bottom: 1.5rem;
     height: 100%;
-    /* background-color: #ffffff90; */
     background-color: var(--color_yellow);
     border-right: red solid 1px;
-    /* border-radius: var(--radius_s) 0 0 0; */
     pointer-events: none;
     z-index: -1;
 }
@@ -378,7 +363,7 @@ body {
 .schedule__item {
     margin: 5px 0;
     padding: 8px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--color_sage);
     min-height: 500px;
 }
 
