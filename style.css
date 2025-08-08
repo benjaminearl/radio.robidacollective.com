@@ -52,8 +52,7 @@
     --color_background_secondary:   var(--color_yellow);
     --color_background_tertiary:    var(--color_brown);
     --color_text_normal:            var(--color_brown);
-    --color_text_muted:             var(--color_060);
-    --color_text_highlighted: ;
+    --color_text_muted:               var(--color_sage);
     --color_text_hover: ;
     --color_border_normal:          var(--color_brown);
     --color_border_muted:           var(--color_yellow);
@@ -296,7 +295,7 @@ body {
     position: absolute;
     bottom: 1.5rem;
     height: 100%;
-    background-color: var(--color_yellow);
+    background-color: var(--color_background_secondary);
     border-right: red solid 1px;
     pointer-events: none;
     z-index: -1;
@@ -308,7 +307,7 @@ body {
     left: 0;
     right: 0;
     height: 1px;
-    background: #000;
+    background: var(--color_background_tertiary);
 }
 
 /* || DRAGGABLE */
@@ -353,7 +352,7 @@ body {
     margin: 0;
     overflow-y: auto;
     background:  var(--color_background_tertiary);
-    color: var(--color_sage);
+    color: var(--color_text_muted);
     border-radius: var(--radius_m);
     padding: var(--spacing_inner-padding);
 }
@@ -361,12 +360,8 @@ body {
 .schedule__item {
     margin: 5px 0;
     padding: 8px;
-    border-bottom: 1px solid var(--color_sage);
+    border-bottom: 1px solid var(--color_border_muted);
     min-height: 500px;
-}
-
-.schedule__item.active {
-    /* background-color: #e0f7fa; */
 }
 
 .schedule-content img {
@@ -442,7 +437,7 @@ body {
     color: var(--color_brown);
     border: var(--border_normal);
     border-radius: var(--radius_m);
-    background-color: var(--color_yellow);
+    background-color: var(--color_background_secondary);
     display: block;
 }
 
@@ -459,7 +454,7 @@ body {
     -webkit-appearance: none;
     height: 0.5rem;
     border-radius: var(--radius_m);
-    background-color: var(--color_brown);
+    background-color: var(--color_background_tertiary);
     outline: none;
     transition: background 0.3s;
     display: block;
@@ -490,7 +485,7 @@ body {
   appearance: none;
   width: 1rem;
   height: 1rem;
-  background-color: var(--color_sage);
+  background-color: var(--color_background_primary);
   border: var(--border_normal);
   cursor: pointer;
   border-radius: var(--radius_l);
@@ -499,7 +494,7 @@ body {
 
 .audio__volumeSlider::-webkit-slider-thumb:hover,
 .audio__volumeSlider::-moz-range-thumb:hover {
-  background: var(--color_yellow);
+  background: var(--color_background_secondary);
 }
 
 /* .audio__volumeSlider::-moz-range-thumb {
