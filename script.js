@@ -132,7 +132,6 @@ fetch(apiUrl)
     return response.json();
   })
   .then(data => {
-    console.log(data);
     parseSunTimes(data)
   })
   .catch(error => {
@@ -145,7 +144,7 @@ function parseSunTimes(data) {
   const sunrise = data.results.sunrise
   const currentTopoloTime = new Date().toLocaleTimeString("en-US", { timeZone: "Europe/Ljubljana" });
 
-  console.log(sunset, sunrise)
+  console.log(sunset, sunrise, "lol")
   console.log(currentTopoloTime)
 
   if(currentTopoloTime < sunset){
