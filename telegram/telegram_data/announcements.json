@@ -1,10 +1,5 @@
 [
   {
-    "user": "channel",
-    "text": "18.30 Sound windows #3",
-    "date": "2025-08-08 18:23"
-  },
-  {
     "user": "other_kat",
     "text": "https://www.tumblr.com/myfriendpokey/705461201521573889/personal-aesthetics",
     "date": "2025-08-08 21:00"
@@ -83,5 +78,10 @@
     "user": "channel",
     "text": "No Radio Quiz (as it was written in the program): we went to the river! It\u2019s too hot",
     "date": "2025-08-09 16:55"
+  },
+  {
+    "user": "channel",
+    "text": "Radio Postcards - photos, feedbacks and reflections about the summer school",
+    "date": "2025-08-09 18:44"
   }
 ]
