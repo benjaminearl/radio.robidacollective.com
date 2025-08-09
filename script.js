@@ -120,51 +120,48 @@ document.querySelectorAll(".chat__toggleBtn").forEach(button => {
 });
 
 
-//SUNSET & SUNRISE
-const apiUrl = 'https://api.sunrise-sunset.org/json?lat=46.177278&lng=13.603986';
+const lat = 46.177278;
+const lng = 13.603986;
+const tz = 'Europe/Ljubljana';
+
+// Get today's date in Ljubljana in YYYY-MM-DD format
+const ljubljanaDate = new Date().toLocaleDateString('en-CA', { timeZone: tz });
+
+// Ask API for ISO 8601 (UTC) timestamps
+const apiUrl = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${ljubljanaDate}&formatted=0`;
 
 fetch(apiUrl)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
+  .then(res => {
+    if (!res.ok) throw new Error('Network response was not ok');
+    return res.json();
   })
   .then(data => {
-    parseSunTimes(data)
+    parseSunTimes(data);
   })
-  .catch(error => {
-    console.error('Error:', error);
-  });
-
+  .catch(err => console.error('Error:', err));
 
 function parseSunTimes(data) {
-  const now = new Date();
+  const sunriseUtc = new Date(data.results.sunrise);
+  const sunsetUtc  = new Date(data.results.sunset);
+  const now        = new Date();
 
-  // Parse sunrise/sunset from API as UTC, then convert to Ljubljana time
-  const sunriseUTC = new Date(`1970-01-01T${data.results.sunrise}Z`);
-  const sunsetUTC  = new Date(`1970-01-01T${data.results.sunset}Z`);
+  console.log('Sunrise (UTC):', sunriseUtc.toISOString());
+  console.log('Sunrise (Ljubljana):', sunriseUtc.toLocaleString('en-GB', { timeZone: tz }));
+  console.log('Sunset (UTC):', sunsetUtc.toISOString());
+  console.log('Sunset (Ljubljana):', sunsetUtc.toLocaleString('en-GB', { timeZone: tz }));
+  console.log('Now (system):', now.toString());
+  console.log('Now (Ljubljana):', now.toLocaleString('en-GB', { timeZone: tz }));
 
-  const sunriseLjubljana = new Date(sunriseUTC.toLocaleString("en-US", { timeZone: "Europe/Ljubljana" }));
-  const sunsetLjubljana  = new Date(sunsetUTC.toLocaleString("en-US", { timeZone: "Europe/Ljubljana" }));
-
-  const nowLjubljana = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Ljubljana" }));
-
-  console.log("Sunrise:", sunriseLjubljana);
-  console.log("Sunset:", sunsetLjubljana);
-  console.log("Now:", nowLjubljana);
-
-  if (nowLjubljana < sunsetLjubljana) {
-    console.log("the sun has risen");
+  if (now >= sunriseUtc && now <= sunsetUtc) {
+    console.log('the sun has risen (daytime)');
+    // Daytime → use your default CSS (no overrides)
+    document.documentElement.removeAttribute('data-theme-night');
   } else {
-    console.log("the sun has set");
+    console.log('the sun has set (night)');
+    // Nighttime overrides
     document.documentElement.style.setProperty('--color_background_primary', 'var(--color_brown)');
-    document.documentElement.style.setProperty('--color_background_tertiary', 'var(--color_sage)');
+    document.documentElement.style.setProperty('--color_background_secondary', 'var(--color_sage)');
     document.documentElement.style.setProperty('--color_text_normal', 'var(--color_sage)');
-    document.documentElement.style.setProperty('--color_text_muted', 'var(--color_brown)');
     document.documentElement.style.setProperty('--color_border_normal', 'var(--color_sage)');
-    document. querySelectorAll(".audio__volumeSlider").forEach(item => {
-      item.style.backgroundColor = "var(--color_sage)"
-    })
   }
 }
