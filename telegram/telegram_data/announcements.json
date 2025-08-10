@@ -1,11 +1,6 @@
 [
   {
     "user": "channel",
-    "text": "No Radio Quiz (as it was written in the program): we went to the river! It\u2019s too hot",
-    "date": "2025-08-09 16:55"
-  },
-  {
-    "user": "channel",
     "text": "Radio Postcards - photos, feedbacks and reflections about the summer school",
     "date": "2025-08-09 18:44"
   },
@@ -33,5 +28,10 @@
     "user": "channel",
     "text": "Channel 2 (TBC) is now also a kind of ambient channel. Two microphones are hanging outside IZBA for people to use for impromptu radio chats",
     "date": "2025-08-10 16:30"
+  },
+  {
+    "user": "channel",
+    "text": "And at 17:30 on channel 2 - a conversation between Radio Onde Furlane, Radio \u0160tudent and Radio Robida!",
+    "date": "2025-08-10 16:55"
   }
 ]
