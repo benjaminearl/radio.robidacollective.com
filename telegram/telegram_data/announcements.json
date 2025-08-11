@@ -1,11 +1,6 @@
 [
   {
     "user": "channel",
-    "text": "Channel 2 (TBC) is now also a kind of ambient channel. Two microphones are hanging outside IZBA for people to use for impromptu radio chats",
-    "date": "2025-08-10 16:30"
-  },
-  {
-    "user": "channel",
     "text": "And at 17:30 on channel 2 - a conversation between Radio Onde Furlane, Radio \u0160tudent and Radio Robida!",
     "date": "2025-08-10 16:55"
   },
@@ -13,5 +8,10 @@
     "user": "other_kat",
     "text": "radio = ugly magic",
     "date": "2025-08-10 20:46"
+  },
+  {
+    "user": "channel",
+    "text": "Haha they're mine - enjoy",
+    "date": "2025-08-11 16:22"
   }
 ]
