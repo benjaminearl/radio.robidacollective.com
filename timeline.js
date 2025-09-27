@@ -5,8 +5,8 @@ const toggleViewBtn = document.getElementById('toggleViewBtn');
 
 const events = [];
 
-let startDate = new Date('2025-08-09T00:00:00');
-let endDate = new Date('2025-08-09T23:59:59');
+let startDate = new Date('2025-09-28T00:00:00');
+let endDate = new Date('2025-09-28T23:59:59');
 
 function enforceViewByScreenSize() {
   const isMobile = window.innerWidth < 768;
@@ -190,7 +190,7 @@ function toggleView() {
 toggleViewBtn.addEventListener('click', toggleView);
 
 // ARE.NA FETCH
-fetch("https://api.are.na/v2/channels/robida-radio-gardening-public-programme/contents?per=100")
+fetch("https://api.are.na/v2/channels/robida-radio-schedule/contents?per=100")
   .then((response) => response.ok ? response.json() : Promise.reject("Network error"))
   .then(data => {
     parseArenaEvents(data);
@@ -245,24 +245,29 @@ document.querySelectorAll(".schedule__toggleBtn").forEach(button => {
 function buildScheduleView() {
   scheduleList.innerHTML = '';
 
-  const sorted = [...events].sort((a, b) => a.start - b.start);
+  // Filter events to only those within the current startDate and endDate
+  const filteredEvents = events.filter(event => {
+    const eventStart = new Date(event.start);
+    const eventEnd = new Date(event.end);
+    return eventEnd >= startDate && eventStart <= endDate;
+  });
+
+  const sorted = filteredEvents.sort((a, b) => a.start - b.start);
 
   sorted.forEach((event, index) => {
     const li = document.createElement('li');
     li.className = 'schedule__item';
     li.dataset.eventIndex = index;
 
-    const startDate = new Date(event.start);
-    const endDate = new Date(event.end);
+    const start = new Date(event.start);
+    const end = new Date(event.end);
 
-    const dateStr = startDate.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
-    const startTimeStr = startDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
-    const endTimeStr = endDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+    const dateStr = start.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+    const startTimeStr = start.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+    const endTimeStr = end.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 
-    // Extract image URL if any
     const imageUrl = extractImageUrl(event.description);
 
-    // Build content element
     let contentHTML = '';
     if (imageUrl) {
       contentHTML = `<img src="${imageUrl}" alt="${event.label}" style="max-width:100%; height:auto; margin-top:8px;">`;
@@ -285,4 +290,5 @@ function buildScheduleView() {
     scheduleList.appendChild(li);
   });
 }
+
 
