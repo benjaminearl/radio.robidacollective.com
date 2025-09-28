@@ -220,7 +220,6 @@ function buildScheduleView() {
 
     li.innerHTML = `
       <strong>${event.label}</strong> <br>
-      <small>${startTimeStr} – ${endTimeStr}</small>
       <div class="schedule-content">${contentHTML}</div>
     `;
 
