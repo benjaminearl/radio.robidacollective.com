@@ -40,22 +40,8 @@ document.querySelectorAll(".audio").forEach(wrapper => {
     streamChannel.classList.remove("clear");
   });
 });
-
-
-  const popup = document.getElementById('popup');
-  const closeBtn = document.getElementById('popupClose');
-
-  closeBtn.addEventListener('click', () => {
-    popup.classList.add('hidden');
-  });
-
-  // Optional: Close popup if clicking outside content
-  popup.addEventListener('click', (e) => {
-    if (e.target === popup) {
-      popup.classList.add('hidden');
-    }
-  });
 });
+
 
 // DRAGGABLE
 function dragElement(elmnt) {

@@ -1,55 +1,43 @@
 const timeline = document.getElementById('timeline');
 const track = timeline.querySelector('.timeline__track');
-const toggleViewBtn = document.getElementById('toggleViewBtn');
-
 
 const events = [];
 
 let startDate = new Date('2025-09-28T00:00:00');
 let endDate = new Date('2025-09-28T23:59:59');
 
-function enforceViewByScreenSize() {
-  const isMobile = window.innerWidth < 768;
-
-  if (isMobile) {
-    timeline.classList.remove('timeline--week');
-    timeline.classList.add('timeline--day');
-    updateTimeline(startDate.toISOString(), endDate.toISOString());
-  }
+// Always enforce daily view
+function enforceDayView() {
+  timeline.classList.add('timeline--day');
+  updateTimeline(startDate.toISOString(), endDate.toISOString());
 }
 
-window.addEventListener('resize', enforceViewByScreenSize);
-window.addEventListener('DOMContentLoaded', enforceViewByScreenSize);
+window.addEventListener('resize', enforceDayView);
+window.addEventListener('DOMContentLoaded', enforceDayView);
 
 function updateTimeline(start, end) {
   startDate = new Date(start);
   endDate = new Date(end);
   track.innerHTML = '';
-  drawDateMarkers();
+  drawDateMarker();
   drawLine();
   drawPlaybar();
   drawEvents();
 }
 
-function drawDateMarkers() {
-  const msPerDay = 86400000;
-  for (let i = 0; i < 1; i++) {
-    const date = new Date(startDate.getTime() + i * msPerDay);
-    const label = date.toLocaleDateString(undefined, { weekday: 'short', day: '2-digit' });
-    const marker = document.createElement('div');
-    marker.className = 'timeline__date-marker';
-    marker.textContent = label;
+function drawDateMarker() {
+  const date = new Date(startDate);
+  const label = date.toLocaleDateString(undefined, { weekday: 'short', day: '2-digit', month: 'short' });
 
-    if (timeline.classList.contains('timeline--day')) {
-      const dayCell = document.createElement('div');
-      dayCell.className = 'timeline__day-cell';
-      dayCell.appendChild(marker);
-      track.appendChild(dayCell);
-    } else {
-      marker.style.left = (i / 1 * 100) + '%';
-      track.appendChild(marker);
-    }
-  }
+  const marker = document.createElement('div');
+  marker.className = 'timeline__date-marker';
+  marker.textContent = label;
+
+  const dayCell = document.createElement('div');
+  dayCell.className = 'timeline__day-cell';
+  dayCell.appendChild(marker);
+
+  track.appendChild(dayCell);
 }
 
 function drawLine() {
@@ -74,54 +62,37 @@ function drawPlaybar() {
 
   updateBar();
 
-  // Scroll to "now" once in daily view
-  if (timeline.classList.contains('timeline--day')) {
-    requestAnimationFrame(() => {
-      const barX = ((new Date() - startDate) / (endDate - startDate)) * track.scrollWidth;
-      const timelineRect = timeline.getBoundingClientRect();
-      timeline.scrollLeft = Math.max(0, barX - timelineRect.width / 2);
-    });
-  }
+  // Scroll to "now" once
+  requestAnimationFrame(() => {
+    const barX = ((new Date() - startDate) / (endDate - startDate)) * track.scrollWidth;
+    const timelineRect = timeline.getBoundingClientRect();
+    timeline.scrollLeft = Math.max(0, barX - timelineRect.width / 2);
+  });
 }
 
-
-
-// Helper to extract Are.na or regular image URLs from a string
+// Helper to extract image URLs
 function extractImageUrl(text) {
   if (!text) return null;
   const arenaImageRegex = /https:\/\/images\.are\.na\/[^\s"]+/i;
   const standardImageRegex = /https?:\/\/\S+\.(jpeg|jpg|png|gif|webp|svg)/i;
-
-  const arenaMatch = text.match(arenaImageRegex);
-  if (arenaMatch) return arenaMatch[0];
-
-  const standardMatch = text.match(standardImageRegex);
-  if (standardMatch) return standardMatch[0];
-
-  return null;
+  return text.match(arenaImageRegex)?.[0] || text.match(standardImageRegex)?.[0] || null;
 }
 
 function simpleMarkdownToHtml(md) {
   if (!md) return '';
-
-  // Escape HTML special chars first
   md = md.replace(/&/g, '&amp;')
          .replace(/</g, '&lt;')
          .replace(/>/g, '&gt;');
 
-  // Headers
   md = md.replace(/^### (.*$)/gim, '<h3>$1</h3>')
          .replace(/^## (.*$)/gim, '<h2>$1</h2>')
          .replace(/^# (.*$)/gim, '<h1>$1</h1>');
 
-  // Bold, italic
   md = md.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
          .replace(/\*(.*?)\*/gim, '<em>$1</em>');
 
-  // Links
   md = md.replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2" target="_blank" rel="noopener">$1</a>');
 
-  // Line breaks and paragraphs
   md = md.replace(/\n{2,}/g, '</p><p>')
          .replace(/\n/g, '<br>')
          .replace(/^(.+)$/gim, '<p>$1</p>');
@@ -129,14 +100,12 @@ function simpleMarkdownToHtml(md) {
   return md.trim();
 }
 
-
 function drawEvents() {
   const stack = Array(20).fill(0);
 
   events.forEach(event => {
     const eventStart = new Date(Math.max(event.start, startDate));
     const eventEnd = new Date(Math.min(event.end, endDate));
-
     if (eventStart > endDate || eventEnd < startDate) return;
 
     const startX = ((eventStart - startDate) / (endDate - startDate)) * 100;
@@ -160,34 +129,18 @@ function drawEvents() {
 }
 
 function highlightScheduleItem(event) {
-  const index = events.indexOf(event);
-  const item = scheduleList.querySelector(`[data-event-index="${index}"]`);
+  const item = scheduleList.querySelector(`[data-event-id="${event.id}"]`);
   if (item) {
     schedule.classList.remove('hidden');
-    item.scrollIntoView({ behavior: 'smooth', block: 'start' });
     scheduleList.querySelectorAll('.schedule__item').forEach(i => i.classList.remove('active'));
     item.classList.add('active');
+    item.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    // Remove highlight after 3 seconds (optional)
     setTimeout(() => {
       item.classList.remove('active');
     }, 3000);
   }
 }
-
-
-function toggleView() {
-  timeline.classList.toggle('timeline--week');
-  timeline.classList.toggle('timeline--day');
-  // if (toggleViewBtn.innerHTML === "Daily schedule") {
-  //   toggleViewBtn.innerHTML = "Week overview";
-  // } else {
-  //   toggleViewBtn.innerHTML = "Daily schedule";
-  // }
-  updateTimeline(startDate.toISOString(), endDate.toISOString());
-}
-
-toggleViewBtn.addEventListener('click', toggleView);
 
 // ARE.NA FETCH
 fetch("https://api.are.na/v2/channels/robida-radio-schedule/contents?per=100")
@@ -200,13 +153,9 @@ fetch("https://api.are.na/v2/channels/robida-radio-schedule/contents?per=100")
 
 function parseArenaEvents(data) {
   events.length = 0;
-  console.log(data);
 
-  data.contents.forEach(item => {
-    if (!item.description) {
-      console.warn("Skipped block with no description:", item.title);
-      return;
-    }
+  data.contents.forEach((item, i) => {
+    if (!item.description) return;
 
     const parts = item.description.split('/');
     const start = new Date(parts[0].trim());
@@ -214,38 +163,30 @@ function parseArenaEvents(data) {
 
     if (!isNaN(start)) {
       events.push({
+        id: `evt-${i}`,
         start,
         end: end && !isNaN(end) ? end : start,
         label: item.title,
         description: item.image?.display?.url || item.content || ''
       });
-    } else {
-      console.warn("Skipped block with invalid date:", item.title, item.description);
     }
   });
-
-  console.log("Events parsed:", events.length);
 
   buildScheduleView();
 }
 
-
-
 const schedule = document.getElementById('schedule');
 const scheduleList = document.getElementById('scheduleList');
-const toggleScheduleBtn = document.getElementById('toggleScheduleBtn');
 
 document.querySelectorAll(".schedule__toggleBtn").forEach(button => {
-  button.addEventListener("click", (e) => {
+  button.addEventListener("click", () => {
     schedule.classList.toggle('hidden');
   });
 });
 
-// Add this to the end of parseArenaEvents()
 function buildScheduleView() {
   scheduleList.innerHTML = '';
 
-  // Filter events to only those within the current startDate and endDate
   const filteredEvents = events.filter(event => {
     const eventStart = new Date(event.start);
     const eventEnd = new Date(event.end);
@@ -254,15 +195,14 @@ function buildScheduleView() {
 
   const sorted = filteredEvents.sort((a, b) => a.start - b.start);
 
-  sorted.forEach((event, index) => {
+  sorted.forEach(event => {
     const li = document.createElement('li');
     li.className = 'schedule__item';
-    li.dataset.eventIndex = index;
+    li.dataset.eventId = event.id;
 
     const start = new Date(event.start);
     const end = new Date(event.end);
 
-    const dateStr = start.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
     const startTimeStr = start.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
     const endTimeStr = end.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 
@@ -279,7 +219,8 @@ function buildScheduleView() {
     }
 
     li.innerHTML = `
-      <strong>${event.label}</strong><br>
+      <strong>${event.label}</strong> <br>
+      <small>${startTimeStr} – ${endTimeStr}</small>
       <div class="schedule-content">${contentHTML}</div>
     `;
 
@@ -290,5 +231,3 @@ function buildScheduleView() {
     scheduleList.appendChild(li);
   });
 }
-
-
