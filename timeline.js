@@ -3,8 +3,8 @@ const track = timeline.querySelector('.timeline__track');
 
 const events = [];
 
-let startDate = new Date('2025-09-28T00:00:00');
-let endDate = new Date('2025-09-28T23:59:59');
+let startDate = new Date('2025-10-17T00:00:00');
+let endDate = new Date('2025-10-17T23:59:59');
 
 // Always enforce daily view
 function enforceDayView() {
