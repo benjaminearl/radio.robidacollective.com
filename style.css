@@ -48,14 +48,15 @@
     --line-height_normal:   1.2;
 
     /* || SEMANTIC */
-    --color_background_primary:     var(--color_sage);
+    --color_background_primary:     var(--color_000);
     --color_background_secondary:   var(--color_yellow);
     --color_background_tertiary:    var(--color_brown);
     --color_text_normal:            var(--color_brown);
-    --color_text_muted:               var(--color_sage);
+    --color_text_muted:             var(--color_000);
     --color_text_hover: ;
     --color_border_normal:          var(--color_brown);
-    --color_border_muted:           var(--color_yellow);
+    --color_border_muted:           var(--color_sage);
+    --color_shadow:                 var(--color_sage);
 
     --spacing_outer-margin:         0 var(--spacing_m);
     --spacing_section-margin:       var(--spacing_s) 0;
@@ -400,7 +401,7 @@ body {
     border-radius: var(--radius_m);
     margin-top: var(--spacing_m);
     background-color: var(--color_background_primary);
-    box-shadow: 0 0 1rem var(--color_yellow);
+    box-shadow: 0 0 1rem var(--color_shadow);
     font-size: var(--font-size_s);
 }
 .announcements__marquee {
@@ -410,9 +411,9 @@ body {
 
 /* || TXT */
 .site-title {
-    font-family: var(--font_secondary);
+    font-family: var(--font_primary);
     color: var(--color_text_normal);
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     font-size: var(--font-size_title);
     text-decoration: none;
 }
