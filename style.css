@@ -1,8 +1,3 @@
-@font-face {
-  font-family: 'Briz';
-  src: url(/fonts/Briz.otf) format("opentype");
-}
-
 :root {
     /* || PRIMITIVES */
     --color_000:    #ffffff;
@@ -40,7 +35,6 @@
     --font-size_xl: 2rem;
 
     --font_primary:         'IBM Plex Mono', monospace;
-    --font_secondary:       'Briz', times new roman, serif;
 
     --font-weight_regular:  normal;
     --font-weight_bold:     bold;
@@ -439,7 +433,7 @@ body {
 .audio__playBtn {
     cursor: pointer;
     background: none;
-    color: var(--color_brown);
+    color: var(--color_background_tertiary);
     border: var(--border_normal);
     border-radius: var(--radius_m);
     background-color: var(--color_background_secondary);

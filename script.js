@@ -147,6 +147,7 @@ function parseSunTimes(data) {
     // Nighttime overrides
     document.documentElement.style.setProperty('--color_background_primary', 'var(--color_brown)');
     document.documentElement.style.setProperty('--color_background_secondary', 'var(--color_sage)');
+    document.documentElement.style.setProperty('--color_background_tertiary', 'var(--color_yellow)');
     document.documentElement.style.setProperty('--color_text_normal', 'var(--color_sage)');
     document.documentElement.style.setProperty('--color_border_normal', 'var(--color_sage)');
   }
