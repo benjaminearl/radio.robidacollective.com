@@ -349,6 +349,7 @@ body {
     background:  var(--color_background_tertiary);
     color: var(--color_text_muted);
     border-radius: var(--radius_m);
+    border: var(--border_muted);
     padding: var(--spacing_inner-padding);
 }
 
@@ -369,9 +370,6 @@ body {
 }
 
 /* || CHAT */
-.chat {
-
-}
 
 .chat.hidden {
     display: none;
@@ -383,7 +381,8 @@ body {
     width: 400px;
     height: 500px;
     overflow-y: auto;
-    background: white;
+    background-color: var(--color_background_secondary);
+    border: var(--border_muted);
     border-radius: var(--radius_m);
     padding: var(--spacing_inner-padding);
 }
