@@ -432,10 +432,10 @@ body {
 .audio__playBtn {
     cursor: pointer;
     background: none;
-    color: var(--color_background_tertiary);
+    color: var(--color_background_primary);
     border: var(--border_normal);
     border-radius: var(--radius_m);
-    background-color: var(--color_background_secondary);
+    background-color: var(--color_background_tertiary);
     display: block;
 }
 
