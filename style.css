@@ -224,6 +224,7 @@ body {
     .stream__channel--mid .stream__name{
         top: -3rem;
     }
+    
 }
 
 
@@ -386,7 +387,11 @@ body {
     border-radius: var(--radius_m);
     padding: var(--spacing_inner-padding);
 }
-
+@media (max-width: 900px) {
+    .chat {
+        display:none;
+    }
+}
 
 /* || ANNOUNCEMENT TICKER */
 .announcements {
