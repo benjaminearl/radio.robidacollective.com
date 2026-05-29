@@ -143,21 +143,25 @@ function highlightScheduleItem(event) {
 }
 
 // ARE.NA FETCH
-fetch("https://api.are.na/v2/channels/robida-radio-schedule/contents?per=100")
-  .then((response) => response.ok ? response.json() : Promise.reject("Network error"))
+fetch("https://api.are.na/v3/channels/robida-radio-schedule/contents?per=100")
+  .then(res => res.ok ? res.json() : Promise.reject(res.status))
   .then(data => {
+    // console.log(data); 
     parseArenaEvents(data);
     updateTimeline(startDate.toISOString(), endDate.toISOString());
   })
-  .catch((error) => console.error("FETCH ERROR:", error));
+  .catch(err => console.error("FETCH ERROR:", err));
 
 function parseArenaEvents(data) {
   events.length = 0;
 
-  data.contents.forEach((item, i) => {
-    if (!item.description) return;
+  const items = Array.isArray(data.data) ? data.data : [];
 
-    const parts = item.description.split('/');
+  items.forEach((item, i) => {
+    const description = item.description?.plain || item.description?.markdown || '';
+    if (!description) return;
+
+    const parts = description.split('/');
     const start = new Date(parts[0].trim());
     const end = parts[1] ? new Date(parts[1].trim()) : null;
 
@@ -167,7 +171,7 @@ function parseArenaEvents(data) {
         start,
         end: end && !isNaN(end) ? end : start,
         label: item.title,
-        description: item.image?.display?.url || item.content || ''
+        description: item.image?.display?.url || item.content?.plain || ''
       });
     }
   });

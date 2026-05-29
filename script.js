@@ -131,12 +131,12 @@ function parseSunTimes(data) {
   const sunsetUtc  = new Date(data.results.sunset);
   const now        = new Date();
 
-  console.log('Sunrise (UTC):', sunriseUtc.toISOString());
-  console.log('Sunrise (Ljubljana):', sunriseUtc.toLocaleString('en-GB', { timeZone: tz }));
-  console.log('Sunset (UTC):', sunsetUtc.toISOString());
-  console.log('Sunset (Ljubljana):', sunsetUtc.toLocaleString('en-GB', { timeZone: tz }));
-  console.log('Now (system):', now.toString());
-  console.log('Now (Ljubljana):', now.toLocaleString('en-GB', { timeZone: tz }));
+  // console.log('Sunrise (UTC):', sunriseUtc.toISOString());
+  // console.log('Sunrise (Ljubljana):', sunriseUtc.toLocaleString('en-GB', { timeZone: tz }));
+  // console.log('Sunset (UTC):', sunsetUtc.toISOString());
+  // console.log('Sunset (Ljubljana):', sunsetUtc.toLocaleString('en-GB', { timeZone: tz }));
+  // console.log('Now (system):', now.toString());
+  // console.log('Now (Ljubljana):', now.toLocaleString('en-GB', { timeZone: tz }));
 
   if (now >= sunriseUtc && now <= sunsetUtc) {
     console.log('the sun has risen (daytime)');
