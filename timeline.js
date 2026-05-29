@@ -146,7 +146,6 @@ function highlightScheduleItem(event) {
 fetch("https://api.are.na/v3/channels/robida-radio-schedule/contents?per=100")
   .then(res => res.ok ? res.json() : Promise.reject(res.status))
   .then(data => {
-    // console.log(data); 
     parseArenaEvents(data);
     updateTimeline(startDate.toISOString(), endDate.toISOString());
   })
@@ -156,6 +155,12 @@ function parseArenaEvents(data) {
   events.length = 0;
 
   const items = Array.isArray(data.data) ? data.data : [];
+
+items.sort((a, b) => {
+  const aStart = new Date(a.description?.plain?.split('/')[0]?.trim());
+  const bStart = new Date(b.description?.plain?.split('/')[0]?.trim());
+  return aStart - bStart;
+});
 
   items.forEach((item, i) => {
     const description = item.description?.plain || item.description?.markdown || '';
